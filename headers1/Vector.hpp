@@ -29,7 +29,7 @@ class Vector {
    
    Vector(std::initializer_list<T> initList);
    
-   Vector(const T&);
+   Vector(const_referance);
    
    Vector(const Vector& );
    
@@ -39,31 +39,31 @@ class Vector {
    
    const Vector& operator=(Vector&&);  
    
-   const T& operator[](size_type) const  noexcept; 
+   const_referance operator[](size_type) const  noexcept; 
    
-   T& operator[](size_type);
+  referance operator[](size_type);
     
     void push_back(const_referance);
     
     void pop_back(); 
     
-    const T& front() const;  
+    const_referance front() const;  
     
-    const T& back() const; 
+    const_referance back() const; 
     
-    T& front(); 
+   referance front(); 
     
-    T& back();
+   referance back();
    
     void recap()  noexcept;
     
-    const T& at(size_type) const;
+    const_referance at(size_type) const;
 
-    T& at(size_type);
+    referance at(size_type);
     
-    T* data(); 
+    pointer data(); 
    
-    const T* data() const;
+    const_pointer data() const;
    
    constexpr bool empty() const;
    
