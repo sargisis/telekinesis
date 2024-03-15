@@ -1,19 +1,16 @@
-#include "Vector.hpp"
+#include "ForwardList.h"
 
-int main(){
-    Vector<int> v = {3,4,2,1,6};
+int main() {
+    Forward_List<int> f = {1,2,3,4};
     
-    v.print(); 
 
-    v.insert(3,2);
-    v.print();
+    f.push_back(55);
+    f.print();
+   
+    f.insert(2,555);
+    f.print();
 
-    v.erase(2);
-    v.print();
-
-    v.push_back(44);
-    v.print();
-    v.pop_back();
-    v.print();
+    f.erase(1);
+    f.print();
     
 }
