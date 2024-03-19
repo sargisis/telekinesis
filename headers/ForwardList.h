@@ -39,7 +39,7 @@ public:
     void pop_back();
     void push_front(const_referance);
     void pop_front();
-    constexpr bool empty() const noexcept;
+    constexpr bool empty() const;
     void clear() noexcept;
     void print() const;
     void _swap(const Forward_List<T>& rhv);
