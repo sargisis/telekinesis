@@ -65,7 +65,7 @@ const Vector<T>& Vector<T>::operator=(Vector&& rhv) {
 }
 
 template<typename T>
-Vector<T>::const_referance Vector<T>::operator[](size_type index) const noexcept {
+Vector<T>::const_referance Vector<T>::operator[](size_type index) const {
     if (index >= _size || index < 0 ){
         throw std::out_of_range("Index of bounds");
     }
@@ -249,11 +249,11 @@ bool operator>(const Vector<T>& lhv , const Vector<U>& rhv) {
 }
 template<typename T , typename U>
 bool operator<=(const Vector<T>& lhv , const Vector<U>& rhv) {
-    return compare(lhv , rhv) < 0;
+    return compare(lhv , rhv) <= 0;
 }
 template<typename T , typename U>
 bool operator<(const Vector<T>& lhv , const Vector<U>& rhv) {
-    return compare(lhv , rhv) == 0;
+    return compare(lhv , rhv) < 0;
 }
 
 template<typename T>
