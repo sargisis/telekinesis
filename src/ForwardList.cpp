@@ -119,7 +119,7 @@ Forward_List<T>::_void Forward_List<T>::pop_back() {
 }
 
 template<typename T>
-constexpr bool Forward_List<T>::empty() const noexcept{
+constexpr bool Forward_List<T>::empty() const {
     return _size == 0;
 }
 
