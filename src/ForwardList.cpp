@@ -32,7 +32,7 @@ Forward_List<T>::Forward_List(const Forward_List<T>& rhv) : Forward_List(nullptr
 }
 
 template<typename T>
-Forward_List<T>::Forward_List(Forward_List<T>&& rhv) : head{} {
+Forward_List<T>::Forward_List(Forward_List<T>&& rhv) : Forward_List(nullptr) {
     this->_swap(rhv);
 }
 
