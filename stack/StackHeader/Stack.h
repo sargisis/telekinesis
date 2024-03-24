@@ -1,0 +1,64 @@
+#ifndef __STACK_H__
+#define __STACK_H__
+
+#include <iostream>
+#include <vector>
+template<typename T , typename Container = std::vector<T>>
+
+class stack {
+private:
+     Container ob;
+public:
+  using value_type = T;
+  using size_type = std::size_t;
+  using referance = value_type&;
+  using const_referance = const value_type&;
+  using pointer = value_type*;
+  using const_pointer = const value_type*;
+public:
+ stack();
+ stack(const stack&);
+ stack(stack&&);
+ ~stack();
+ const stack& operator=(const stack<T,Container>&);
+ const stack& operator=(stack<T,Container>&&);
+ stack(std::initializer_list<T>);
+ void push(const_referance);
+ void pop();
+ public:
+ value_type& top();
+ size_type& size();
+ void swap(const stack&);
+ bool empty();
+ 
+};
+
+template<typename T , typename Container = std::vector<T>>
+bool operator<(const stack<T,Container> lhs, const stack<T,Container> rhs);
+
+template<typename T , typename Container = std::vector<T>>
+bool operator<=(const stack<T,Container> lhs, const stack<T,Container> rhs);
+
+template<typename T , typename Container = std::vector<T> >
+bool operator>(const stack<T,Container> lhs, const stack<T,Container> rhs);
+
+template<typename T , typename Container = std::vector<T>>
+bool operator>=(const stack<T,Container> lhs, const stack<T,Container> rhs);
+
+template<typename T , typename Container = std::vector<T>>
+bool operator==(const stack<T,Container> lhs, const stack<T,Container> rhs);
+
+template<typename T , typename Container = std::vector<T>>
+bool operator!=(const stack<T,Container> lhs, const stack<T,Container> rhs);
+
+
+template<typename T , typename Container = std::vector<T>>
+std::ostream& operator<<(std::ostream& os , const stack<T,Container>& rhv){
+   os << rhv << " ";
+   return os; 
+}
+
+#include "Stack.cpp"
+
+#endif //  __STACK_H__
+
