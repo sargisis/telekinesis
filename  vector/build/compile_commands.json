@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/Users/ONLYPROGRAMMING/Desktop/ vector/build",
+  "command": "/usr/bin/clang++   -g -std=gnu++20 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o CMakeFiles/Vector.dir/main.cpp.o -c \"/Users/ONLYPROGRAMMING/Desktop/ vector/main.cpp\"",
+  "file": "/Users/ONLYPROGRAMMING/Desktop/ vector/main.cpp",
+  "output": "CMakeFiles/Vector.dir/main.cpp.o"
+}
+]
