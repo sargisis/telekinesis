@@ -233,27 +233,27 @@ void Vector<T>::resize(value_type newsize , const_referance val ){
 
 template<typename T , typename U>
 bool operator==(const Vector<T>& lhv , const Vector<U>& rhv) {
-    return compare(lhv , rhv) == 0;
+   return lhv.size() == rhv.size();
 }
 template<typename T , typename U>
 bool operator!=(const Vector<T>& lhv , const Vector<U>& rhv) {
-    return compare(lhv , rhv) != 0;
+    return lhv.size() != rhv.size();
 }
 template<typename T , typename U>
 bool operator>=(const Vector<T>& lhv , const Vector<U>& rhv) {
-    return compare(lhv , rhv) >= 0;
+     return lhv.size() >= rhv.size();
 }
 template<typename T , typename U>
 bool operator>(const Vector<T>& lhv , const Vector<U>& rhv) {
-    return compare(lhv , rhv) > 0;
+      return lhv.size() > rhv.size();
 }
 template<typename T , typename U>
 bool operator<=(const Vector<T>& lhv , const Vector<U>& rhv) {
-    return compare(lhv , rhv) < 0;
+   return lhv.size() <= rhv.size();
 }
 template<typename T , typename U>
 bool operator<(const Vector<T>& lhv , const Vector<U>& rhv) {
-    return compare(lhv , rhv) == 0;
+      return lhv.size() < rhv.size();
 }
 
 template<typename T>
