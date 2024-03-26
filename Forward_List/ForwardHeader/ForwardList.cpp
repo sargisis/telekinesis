@@ -31,7 +31,12 @@ Forward_List<T>::Forward_List(const Forward_List<T>& rhv) : Forward_List(nullptr
     }
 }
 
-
+template<typename T>
+Forward_List<T>::Forward_List(Forward_List<T>&& rhv) 
+    : head{nullptr}
+{
+    this->_swap(rhv);
+}
 
 template<typename T>
 const Forward_List<T>& Forward_List<T>::operator=(const Forward_List<T>& rhv){
