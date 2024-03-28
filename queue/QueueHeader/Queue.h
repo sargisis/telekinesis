@@ -28,10 +28,9 @@ public:
  void pop();
  public:
  size_type front() const;
- referance size() const;
+ size_type size() const;
  void swap(const queue&);
  bool empty() const;
- void print() const; 
  referance operator [](size_type index);
  
 };
@@ -54,6 +53,8 @@ bool operator==(const queue<T> lhs, const queue<T> rhs);
 template<typename T>
 bool operator!=(const queue<T> lhs, const queue<T> rhs);
 
+template<typename T>
+std::ostream& operator<<(std::ostream& os , const queue<T>&);
 
 #include "Queue.hpp"
 

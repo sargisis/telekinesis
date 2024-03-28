@@ -31,7 +31,7 @@ public:
  size_type size() const;
  void _swap(const stack&);
  bool empty();
- void print() const;
+ 
  referance operator[](size_type index);
 
 };
@@ -53,6 +53,9 @@ bool operator==( stack<T>& lhs, stack<T>& rhs);
 
 template<typename T>
 bool operator!=( stack<T>& lhs,  stack<T>& rhs);
+
+template<typename T>
+std::ostream& operator<<(std::ostream& os , stack<T>& rhv);
 
 
 

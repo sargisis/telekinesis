@@ -4,19 +4,23 @@
 #include "Stack.h"
 
 template<typename T>
-stack<T>::stack() 
-
+stack<T>::stack()  
+   
 {}
 
 template<typename T>
 stack<T>::stack(const stack& rhv)  
- : ob{rhv.ob}
-{}
+ : stack()
+{
+    this->ob = rhv.ob;
+}
 
 template<typename T>
 stack<T>::stack(stack&& rhv) 
-    : ob{std::move(rhv.ob)}
-{}
+    : stack()
+{
+    this->ob = std::move(rhv.ob);
+}
 
 template<typename T>
 stack<T>::~stack() noexcept 
@@ -24,8 +28,11 @@ stack<T>::~stack() noexcept
 
 template<typename T>
 stack<T>::stack(std::initializer_list<T> initlist)        
-    : ob(initlist.begin() , initlist.end())
-{}
+{
+    for(const T& val : initlist){
+        this->ob.push_back(val);
+    }
+}
 template<typename T>
 const stack<T>& stack<T>::operator=(const stack& rhv){
     if (this != &rhv){
@@ -44,20 +51,18 @@ const stack<T>& stack<T>::operator=(stack&& rhv){
 
 template<typename T>
 stack<T>::referance stack<T>::top(){
-    if (ob.empty()){
-        throw std::out_of_range("stack::top(): stack is empty");
-    }
+   
     return ob.back();
 }
 
 template<typename T>
 void stack<T>::_swap(const stack& rhv){
-    std::swap(ob , rhv.ob);
+    std::swap(ob , rhv.ob); // Here is error
 }
 
 template<typename T>
 bool stack<T>::empty() {
-    return ob.empty();
+    return !ob.empty();
 }
 
 template<typename T>
@@ -81,15 +86,6 @@ template<typename T>
 stack<T>::referance stack<T>::operator[](size_type index) {
     return ob[index];
 }
-
-
-template<typename T>
-void stack<T>::print() const {
-    for (size_t i = 0; i < ob.size(); ++i ){
-        std::cout << ob[i] << " " << std::endl; 
-    }
-}
-
 
 template<typename T>
 bool operator<( stack<T>& lhs,  stack<T> &rhs){
@@ -119,6 +115,14 @@ bool operator==( stack<T>& lhs,  stack<T>& rhs){
 template<typename T>
 bool operator!=( stack<T>& lhs,  stack<T>& rhs){
     return lhs.size() != rhs.size();
+}
+
+template<typename T>
+std::ostream& operator<<(std::ostream& os , stack<T>& rhv){
+    for (size_t i = 0; i < rhv.size(); ++i){
+        os << rhv[i] << " ";
+    }
+    return os; 
 }
 
 

@@ -9,14 +9,15 @@ template<typename T>
 queue<T>::queue()
     
 {
-    ob = nullptr;
+    this->ob = nullptr;
 } 
 
 template<typename T>
 queue<T>::queue(const queue& rhv) 
+   : queue()
 
 {
-    ob = rhv.ob;
+    this->ob = rhv.ob;
 }
 
 template<typename T>
@@ -24,7 +25,7 @@ queue<T>::queue(queue&& rhv)
     : queue()
 
 {
-    ob = std::move(rhv.ob);
+    this->ob = std::move(rhv.ob);
 }
 
 template<typename T>
@@ -32,15 +33,16 @@ queue<T>::~queue() {}
 
 template<typename T>
 queue<T>::queue(std::initializer_list<T> initlist)
-   : ob{initlist}
-{}
+   
+{   
+    for (const T& val : initlist){
+        ob.push_back(val);
+    }
+}
 template<typename T>
 const queue<T>& queue<T>::operator=(const queue& rhv){
     if (this != &rhv){
-        
-          for (const T& val : rhv){
-              ob = rhv.ob;
-          }
+        this->ob = rhv;
     }
      return *this; 
 }
@@ -48,10 +50,7 @@ const queue<T>& queue<T>::operator=(const queue& rhv){
 template<typename T>
 const queue<T>& queue<T>::operator=(queue&& rhv){
         if (this != &rhv){
-
-            for (const T& val : rhv){
-                ob = std::move(rhv.ob);
-            }
+            this->ob = std::move(rhv.ob);
         }
     return *this; 
 }
@@ -62,37 +61,33 @@ queue<T>::size_type queue<T>::front() const {
 
 template<typename T>
 void queue<T>::swap(const queue& rhv){
-     std::swap(ob , rhv.ob);
+     for (size_t i = 0; i < rhv.size(); ++i){
+         for(size_t j = 0; j < rhv.size(); ++j){
+             std::swap(rhv.ob[i] , rhv.ob[j]); // Error is here fix this 
+         }
+     }
 }
 
 template<typename T>
 bool queue<T>::empty() const {
-     return ob.size();
+     return !ob.size();
 }
 
 
 template<typename T>
-queue<T>::referance queue<T>::size() const {
+queue<T>::size_type queue<T>::size() const {
     return ob.size();
     
 }
 
 template<typename T>
 void queue<T>::push(const_referance elem){
-   return ob.push_front(elem);
+   return ob.push_back(elem);
 }
 
 template<typename T>
 void queue<T>::pop(){
     return ob.pop_front();
-}
-
-template<typename T>
-void queue<T>::print() const
-{   
-    for(size_t i = 0; i < ob.size(); ++i){
-        std::cout << ob[i] << " " << std::endl; 
-    }
 }
 
 template<typename T>
@@ -103,32 +98,40 @@ queue<T>::referance queue<T>::operator[](size_type index) {
 
 template<typename T>
 bool operator<(const queue<T> lhs, const queue<T> rhs){
-    return compare(lhs, rhs) < 0;
+    return lhs.size() < rhs.size();
 }
 
 template<typename T>
 bool operator>(const queue<T> lhs, const queue<T> rhs){
-    return compare(lhs, rhs) > 0;
+    return lhs.size() > rhs.size();
 }
 
 template<typename T>
 bool operator<=(const queue<T> lhs, const queue<T> rhs){
-    return compare(lhs, rhs) <= 0;
+    return lhs.size() <= rhs.size();
 }
 
 template<typename T>
 bool operator>=(const queue<T> lhs, const queue<T> rhs){
-    return compare(lhs, rhs) >= 0;
+    return lhs.size() >= rhs.size();
 }
 
 template<typename T>
 bool operator==(const queue<T> lhs, const queue<T> rhs){
-    return compare(lhs, rhs) == 0;
+    return lhs.size() == rhs.size();
 }
 
 template<typename T>
 bool operator!=(const queue<T> lhs, const queue<T> rhs){
-    return compare(lhs, rhs) != 0;
+    return lhs.size() != rhs.size();
+}
+
+template<typename T>
+std::ostream& operator<<(std::ostream& os ,  queue<T>& rhv){
+    for(size_t i = 0; i < rhv.size(); ++i){
+        os << rhv[i] << " ";
+    }
+    return os; 
 }
 
 
