@@ -39,18 +39,18 @@ class Vector {
    
    const Vector& operator=(Vector&&);  
    
-   const_referance operator[](size_type) const  noexcept; 
+   const_referance operator[](size_type) const; 
    
   referance operator[](size_type);
-    
-    void push_back(const_referance);
-    
-    void pop_back(); 
-    
-    const_referance front() const;  
-    
-    const_referance back() const; 
-    
+  
+  void push_back(const_referance);
+  
+  void pop_back(); 
+  
+  const_referance front() const;  
+  
+  const_referance back() const; 
+  
    referance front(); 
     
    referance back();
@@ -83,7 +83,7 @@ class Vector {
    
     void print() const;
    
-    void _swap(const Vector&);
+    void _swap( Vector&);
 
 };
 
@@ -105,6 +105,9 @@ bool operator<(const Vector<T>& lhv, const Vector<U>& rhv);
 template<typename T, typename U>
 bool operator<=(const Vector<T>& lhv, const Vector<U>& rhv);
 
+
+template<typename T>
+std::ostream& operator<<(std::ostream& os , const Vector<T>& rhv);
 
 #include "Vector.cpp"
 

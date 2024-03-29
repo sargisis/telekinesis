@@ -29,7 +29,7 @@ public:
  public:
  size_type front() const;
  size_type size() const;
- void swap(const queue&);
+ void swap( queue&);
  bool empty() const;
  referance operator [](size_type index);
  

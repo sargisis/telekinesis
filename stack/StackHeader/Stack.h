@@ -24,12 +24,12 @@ public:
  const stack& operator=(const stack<T>&);
  const stack& operator=(stack<T>&&);
  stack(std::initializer_list<T>);
- void push(const T&);
+ void push(const_referance );
  void pop();
  public:
  referance top();
  size_type size() const;
- void _swap(const stack&);
+ void _swap(stack&);
  bool empty();
  
  referance operator[](size_type index);

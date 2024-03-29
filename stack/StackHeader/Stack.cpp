@@ -56,8 +56,9 @@ stack<T>::referance stack<T>::top(){
 }
 
 template<typename T>
-void stack<T>::_swap(const stack& rhv){
-    std::swap(ob , rhv.ob); // Here is error
+void stack<T>::_swap(stack& rhv){
+    std::swap(ob, rhv.ob);
+    // std::swap(size() , rhv.size());
 }
 
 template<typename T>

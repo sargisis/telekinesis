@@ -10,5 +10,6 @@ int main(){
     std::cout << s.front() << std::endl;
      s1.swap(s);
      std::cout << s1 << std::endl; 
+     std::cout << s << std::endl; 
     
 }

@@ -20,7 +20,8 @@ Forward_List<T>::Forward_List(std::initializer_list<T> initlist)
 }
 
 template<typename T>
-Forward_List<T>::Forward_List(const Forward_List<T>& rhv) : Forward_List(nullptr , 0) {
+Forward_List<T>::Forward_List(const Forward_List<T>& rhv) 
+    : Forward_List(nullptr , 0) {
     if (rhv.head == nullptr) {
         return;
     }
@@ -175,9 +176,10 @@ Forward_List<T>::_void Forward_List<T>::insert(size_type index , const_referance
         } 
     else {
         Node* current = this->head; 
-        if (current != nullptr)
-        for (int i = 0; i < index - 1 && current != nullptr; ++i){
+        if (current != nullptr){
+        for (int i = 0; i < index - 1; ++i){
              current = current->next; 
+        }
         }
         if (current != nullptr){
             Node* temp = new Node(val);
@@ -188,7 +190,7 @@ Forward_List<T>::_void Forward_List<T>::insert(size_type index , const_referance
         else {
             throw std::exception();
         }
-     }
+    }
 }
 template<typename T>
 Forward_List<T>::_void Forward_List<T>::clear() noexcept {
@@ -209,9 +211,9 @@ Forward_List<T>::_void Forward_List<T>::print() const {
 }   
 
 template<typename T>
-Forward_List<T>::_void Forward_List<T>::_swap(const Forward_List<T>& rhv){
+Forward_List<T>::_void Forward_List<T>::_swap( Forward_List<T>& rhv){
      std::swap(head , rhv.head);
-     std::swap(_size,  rhv._size);
+    
 }
 
 template<typename T>
@@ -236,6 +238,8 @@ Forward_List<T>::referance Forward_List<T>::front() {
     }
     return head->val;
 }
+
+
 
 
 #endif // __FORWARD_LIST_HPP___

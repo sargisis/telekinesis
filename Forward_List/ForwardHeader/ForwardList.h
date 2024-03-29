@@ -42,7 +42,7 @@ public:
     constexpr bool empty() const;
     void clear() noexcept;
     void print() const;
-    void _swap(const Forward_List<T>& rhv);
+    void _swap( Forward_List<T>& rhv);
     void insert(size_type  , const_referance);
     void erase(size_type );
     constexpr size_type Size();

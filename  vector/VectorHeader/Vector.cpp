@@ -65,18 +65,13 @@ const Vector<T>& Vector<T>::operator=(Vector&& rhv) {
 }
 
 template<typename T>
-Vector<T>::const_referance Vector<T>::operator[](size_type index) const noexcept {
-    if (index >= _size || index < 0 ){
-        throw std::out_of_range("Index of bounds");
-    }
+Vector<T>::const_referance Vector<T>::operator[](size_type index) const  {
+    
     return m_ptr[index];
 }
 
 template<typename T>
 Vector<T>::referance Vector<T>::operator[](size_type index)  {
-    if (index >= _size || index < 0 ){
-        throw std::out_of_range("Index of bounds");
-    }
     return m_ptr[index];
 }
 
@@ -132,17 +127,13 @@ void Vector<T>::recap()  noexcept {
 
 template<typename T>
 Vector<T>::const_referance Vector<T>::at(size_type index) const {
-    if (index >= _size || index < 0){
-        throw std::out_of_range("Index of bounds");
-    }  
+  
     return m_ptr[index];
 }
 
 template<typename T>
 Vector<T>::referance Vector<T>::at(size_type index)  {
-    if (index >= _size || index < 0){
-        throw std::out_of_range("Index of bounds");
-    }  
+    
     return m_ptr[index];
 }
 
@@ -265,11 +256,15 @@ void Vector<T>::print() const {
 
 
 template<typename T>
-void Vector<T>::_swap(const Vector& ob){
-    for(size_t i = 0; i < _size; ++i){
-        for (size_t j = 0; j < _size; ++j){
-            std::swap(m_ptr[i] , ob.m_ptr[j]);
-        }
+void Vector<T>::_swap( Vector& ob){
+    std::swap(m_ptr , ob.m_ptr);
+}
+
+template<typename T>
+std::ostream& operator<<(std::ostream& os , const Vector<T>& rhv){
+    for(size_t i = 0; i < rhv.Size(); ++i){
+        os << rhv[i] << " ";
     }
+    return os; 
 }
 #endif // VECTOR_HPP

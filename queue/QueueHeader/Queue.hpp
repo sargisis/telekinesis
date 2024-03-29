@@ -60,12 +60,8 @@ queue<T>::size_type queue<T>::front() const {
 }
 
 template<typename T>
-void queue<T>::swap(const queue& rhv){
-     for (size_t i = 0; i < rhv.size(); ++i){
-         for(size_t j = 0; j < rhv.size(); ++j){
-             std::swap(rhv.ob[i] , rhv.ob[j]); // Error is here fix this 
-         }
-     }
+void queue<T>::swap( queue& rhv){
+     std::swap(ob , rhv.ob);
 }
 
 template<typename T>
