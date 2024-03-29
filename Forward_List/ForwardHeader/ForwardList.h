@@ -19,7 +19,7 @@ private:
     std::size_t _size = 0; 
 public:
    using value_type = T;
-   using _void = void; 
+   
    using size_type = std::size_t;
    using referance = value_type&;
    using const_referance = const value_type&;
@@ -28,13 +28,13 @@ public:
 public:
     Forward_List();
     Forward_List(std::initializer_list<T> initlist); 
-    Forward_List(const Forward_List<T>& rhv); // copy ctor 
-    Forward_List(Forward_List<T>&&); // move ctor 
+    Forward_List(const Forward_List<T>& rhv); 
+    Forward_List(Forward_List<T>&&); 
     const Forward_List& operator=(const Forward_List<T>&);
     const Forward_List& operator=(Forward_List<T>&&);
     ~Forward_List();
-    T& front();
-    T& operator[](size_type);
+    referance front();
+    referance operator[](size_type);
     void push_back(const_referance);
     void pop_back();
     void push_front(const_referance);

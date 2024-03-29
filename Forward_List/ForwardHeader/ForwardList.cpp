@@ -86,7 +86,7 @@ Forward_List<T>::referance Forward_List<T>::operator[](size_type index){
 }
 
 template<typename T>
-Forward_List<T>::_void Forward_List<T>::push_back(const_referance val){
+void Forward_List<T>::push_back(const_referance val){
     Node* newNode = new Node(val);
     if (this->head == nullptr){
         this->head = newNode;
@@ -102,7 +102,7 @@ Forward_List<T>::_void Forward_List<T>::push_back(const_referance val){
 }
 
 template<typename T>
-Forward_List<T>::_void Forward_List<T>::pop_back() {
+void Forward_List<T>::pop_back() {
     if (this->head == nullptr){
         return;
     }
@@ -127,7 +127,7 @@ constexpr bool Forward_List<T>::empty() const {
 }
 
 template<typename T>
-Forward_List<T>::_void Forward_List<T>::erase(size_type index){
+void Forward_List<T>::erase(size_type index){
     if (index >= _size){
         throw std::out_of_range("Index greater than _size");
     }
@@ -163,7 +163,7 @@ constexpr Forward_List<T>::size_type Forward_List<T>::Size() {
 }
 
 template<typename T>
-Forward_List<T>::_void Forward_List<T>::insert(size_type index , const_referance val){
+void Forward_List<T>::insert(size_type index , const_referance val){
        if (index >= _size){
             throw std::runtime_error("index of great then member size");
        }
@@ -193,7 +193,7 @@ Forward_List<T>::_void Forward_List<T>::insert(size_type index , const_referance
     }
 }
 template<typename T>
-Forward_List<T>::_void Forward_List<T>::clear() noexcept {
+void Forward_List<T>::clear() noexcept {
     while(!Size()) {
        
         pop_front();
@@ -201,7 +201,7 @@ Forward_List<T>::_void Forward_List<T>::clear() noexcept {
  }
 
 template<typename T>
-Forward_List<T>::_void Forward_List<T>::print() const {
+void Forward_List<T>::print() const {
     Node* current = this->head;
     while(current){
         std::cout << current->val << " ";
@@ -211,20 +211,20 @@ Forward_List<T>::_void Forward_List<T>::print() const {
 }   
 
 template<typename T>
-Forward_List<T>::_void Forward_List<T>::_swap( Forward_List<T>& rhv){
+void Forward_List<T>::_swap( Forward_List<T>& rhv){
      std::swap(head , rhv.head);
     
 }
 
 template<typename T>
-Forward_List<T>::_void Forward_List<T>::push_front(const_referance val){
+void Forward_List<T>::push_front(const_referance val){
     Node* newNode = new Node(val);
     newNode->next = this->head;
     head = newNode;
 }
 
 template<typename T>
-Forward_List<T>::_void Forward_List<T>::pop_front() {
+void Forward_List<T>::pop_front() {
     Node* tmp = this->head;
     tmp->next = this->head->next; 
     delete tmp; 
