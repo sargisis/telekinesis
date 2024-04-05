@@ -55,7 +55,7 @@ const Cell& Cell::operator=(Cell&& rhv){
     return *this;     
 }
 
-Cell::~Cell() noexcept {}
+Cell::~Cell() {}
 
 
 std::ostream& operator<<(std::ostream& os , const Cell& rhv){

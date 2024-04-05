@@ -25,8 +25,8 @@ public:
         return storage;
     }
     
-    friend std::istream& operator>>(std::istream &is , Cell& rhv);
-    ~Cell() noexcept;
+   friend std::istream& operator>>(std::istream &is , Cell& rhv);
+    ~Cell() ;
 };
 std::ostream& operator<<(std::ostream& os , const Cell& rhv);
 std::istream& operator>>(std::istream& os ,  Cell& rhv);
