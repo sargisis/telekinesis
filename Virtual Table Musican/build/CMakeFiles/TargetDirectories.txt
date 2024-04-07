@@ -1,0 +1,3 @@
+/Users/ONLYPROGRAMMING/Desktop/Virtual Table Musican/build/CMakeFiles/VirtualTable.dir
+/Users/ONLYPROGRAMMING/Desktop/Virtual Table Musican/build/CMakeFiles/edit_cache.dir
+/Users/ONLYPROGRAMMING/Desktop/Virtual Table Musican/build/CMakeFiles/rebuild_cache.dir
