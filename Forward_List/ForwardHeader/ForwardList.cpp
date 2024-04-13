@@ -63,7 +63,6 @@ const Forward_List<T>& Forward_List<T>::operator=(Forward_List<T>&& rhv){
     return *this;
 }
 
-
 template<typename T>
 Forward_List<T>::~Forward_List() {
     clear();
@@ -213,7 +212,6 @@ void Forward_List<T>::print() const {
 template<typename T>
 void Forward_List<T>::_swap( Forward_List<T>& rhv){
      std::swap(head , rhv.head);
-    
 }
 
 template<typename T>
@@ -238,8 +236,5 @@ Forward_List<T>::referance Forward_List<T>::front() {
     }
     return head->val;
 }
-
-
-
 
 #endif // __FORWARD_LIST_HPP___

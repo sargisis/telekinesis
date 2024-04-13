@@ -6,6 +6,7 @@
 #include <ostream>
 #include <istream>
 
+
 class Cell {
 private:
     std::string storage; 

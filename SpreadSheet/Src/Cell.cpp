@@ -1,3 +1,6 @@
+#ifndef __CELL_H__
+#define __CELL_H__
+
 #include "../Headers/Cell.h"
 
 Cell::operator int(){
@@ -68,3 +71,4 @@ std::istream& operator>>(std::istream& is , Cell& rhv){
     return is; 
 }
 
+#endif // 

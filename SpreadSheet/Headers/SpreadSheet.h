@@ -3,7 +3,7 @@
 
 #include "Cell.h"
 
-class SpreadSheet : public Cell{
+class SpreadSheet {
 private:
     Cell** ob; 
 private:

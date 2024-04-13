@@ -1,19 +1,19 @@
 #include "../VectorHeader/Vector.hpp"
+#include <iostream>
 
-int main(){
-    Vector<int> v = {3,4,2,1,6};
+
+int main() {
+    Vector<int> v = {1, 2, 3, 4, 5};
     
-   std::cout << v << std::endl; 
-
-    v.insert(3,2);
-  std::cout << v << std::endl; 
-
-    v.erase(2);
-    v.print();
-
-    v.push_back(44);
-    std::cout << v << std::endl; 
-    v.pop_back();
-    std::cout << v << std::endl; 
+    v.push_back(33);
+    std::cout << v.Size() << std::endl; 
+    std::cout<<"Capacity"<< v.Capacity() << std::endl;
+    auto it = v.end();
+    std::cout << *it << std::endl; 
+    std::cout << v.back() << std::endl; 
     
+    
+
 }
+
+    
