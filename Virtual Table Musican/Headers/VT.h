@@ -1,225 +1,154 @@
 #include <iostream>
 #include <string>
 
-struct Musician;
-
-struct Guitarist;
-
+struct Musician; 
+struct Guitarist; 
 struct Pianist;
-
-struct Violist;
-
 struct Drummerist;
-
 struct Saxsaphoneist;
-
 struct Trumperist;
-
 struct Clarnist;
-
 struct Fluteist;
-
 struct Accordionist;
-
+struct Violist; 
 
 
 struct MTI {
-
-    std::string Typename;
-
-    std::string Base_Types;
-
+    std::string Typename = "Musician";
+    std::string Base_Type = "";
 } mti;
 
-
-
-struct GIT {
-
-    std::string Typename;
-
-    std::string Base_Types;
-
-} git;
-
-
-
-struct PIT {
-
-    std::string Typename;
-
-    std::string Base_Types;
-
-} pit;
-
-
-
-struct VIT {
-
-    std::string Typename;
-
-    std::string Base_Types;
-
-} vit;
-
-
-
-struct DIT {
-
-    std::string Typename;
-
-    std::string Base_Types;
-
-} dit;
-
-
-
-struct SIT {
-
-    std::string Typename;
-
-    std::string Base_Types;
-
-} sit;
-
-
-
-struct TIT {
-
-    std::string Typename;
-
-    std::string Base_Types;
-
-} tit;
-
-
-
-struct CIT {
-
-    std::string Typename;
-
-    std::string Base_Types;
-
-} cit;
-
-
-
-struct FIT {
-
-    std::string Typename;
-
-    std::string Base_Types;
-
-} fit;
-
-
-
-struct AIT {
-
-    std::string Typename;
-
-    std::string Base_Types;
-
-} ait;
-
-
-
-
-
 struct MVTBL {
-
     MTI* type_info = &mti;
 
-    void (*play)() = &Musician::play;
+    void (Musician::*play)();
 
 } mvtbl;
 
-
+struct GIT {
+    std::string Typename = "Guitarist";
+    std::string Base_Type = "Musician";
+} git;
 
 struct GVTBL {
-
     GIT* type_info = &git;
 
-    void (*play)() = &Guitarist::play;
+    void (Guitarist::*play)();
 
 } gvtbl;
 
+struct PIT {
+    std::string Typename = "Pianist";
 
-
+    std::string Base_Type = "Musician";
+} pit;
 struct PVTBL {
-
     PIT* type_info = &pit;
 
-    void (*play)() = &Pianist::play;
+    void (Pianist::*play)();
 
 } pvtbl;
 
 
+struct DIT {
+
+    std::string Typename = "Drummerist";
+
+    std::string Base_Type = "Musician";
+
+} dit;
 
 struct DVTBL {
-
     DIT* type_info = &dit;
 
-    void (*play)() = &Drummerist::play;
+    void (Drummerist::*play)();
 
 } dvtbl;
 
 
 
-struct SVTBL {
+struct SIT {
 
+    std::string Typename = "Saxsaphoneist";
+
+    std::string Base_Type = "Musician";
+
+} sit;
+struct SVTBL {
     SIT* type_info = &sit; 
 
-    void (*play)() = &Saxsaphoneist::play;
+    void (Saxsaphoneist::*play)();
 
 } svtbl;
 
 
+struct TIT {
+
+    std::string Typename = "Trumperist";
+    std::string Base_Type = "Musician";
+
+} tit;
 
 struct TVTBL {
-
     TIT* type_info = &tit;
 
-    void (*play)() = &Trumperist::play;
+    void (Trumperist::*play)();
 
 } tvtbl;
 
+struct CIT {
 
+    std::string Typename = "Clarnist";
+    std::string Base_Type = "Musician";
+
+} cit;
 
 struct CVTBL {
-
     CIT* type_info = &cit;
 
-    void (*play)() = &Clarnist::play;
+    void (Clarnist::*play)();
 
 } cvtbl;
 
 
+struct FIT {
 
+    std::string Typename = "Fluteist";
+    std::string Base_Type = "Musician";
+
+} fit;
 struct FVTBL {
-
     FIT* type_info = &fit;
 
-    void (*play)() = &Fluteist::play;
+    void (Fluteist::*play)();
 
 } fvtbl;
 
 
 
-struct AVTBL {
+struct AIT {
+    std::string Typename = "Accordionist";
+    std::string Base_Type = "Musician";
 
+} ait;
+
+struct AVTBL {
     AIT* type_info = &ait;
 
-    void (*play)() = &Accordionist::play;
+    void (Accordionist::*play)();
 
 } avtbl;
 
-
+struct VIT {
+    std::string Typename = "Violist";
+    std::string Base_Type = "Musician";
+}vit;
 
 struct VVTBL {
 
     VIT* type_info = &vit; 
 
-    void (*play)() = &Violist::play;
+    void (Violist::*play)();
 
 } vvtbl;
 
@@ -241,7 +170,7 @@ struct Guitarist : Musician {
 
 
 
-struct Pianist : Musician {
+struct Pianist {
    
     static void play() {
         std::cout << "Pianist is playing " << std::endl;
@@ -249,7 +178,7 @@ struct Pianist : Musician {
     PVTBL* vptr = &pvtbl;
 };
 
-struct Drummerist : Musician {
+struct Drummerist {
    
     static void play() {
         std::cout << "Drummerist is playing " << std::endl;
@@ -257,7 +186,7 @@ struct Drummerist : Musician {
     DVTBL* vptr = &dvtbl;
 };
 
-struct Saxsaphoneist : Musician {
+struct Saxsaphoneist  {
    
     static void play() {
         std::cout << "Saxsaphoneist is playing " << std::endl;
@@ -265,7 +194,7 @@ struct Saxsaphoneist : Musician {
     SVTBL* vptr = &svtbl;
 };
 
-struct Trumperist : Musician {
+struct Trumperist  {
    
     static void play() {
         std::cout << "Trumperist is playing " << std::endl;
@@ -273,7 +202,7 @@ struct Trumperist : Musician {
     TVTBL* vptr = &tvtbl;
 };
 
-struct Clarnist : Musician {
+struct Clarnist {
 
     static void play() {
         std::cout << "Clarnist is playing " << std::endl;
@@ -282,7 +211,7 @@ struct Clarnist : Musician {
 
 };
 
-struct Fluteist : Musician {
+struct Fluteist {
    
     static void play() {
         std::cout << "Fluteist is playing " << std::endl;
@@ -290,7 +219,7 @@ struct Fluteist : Musician {
     FVTBL* vptr = &fvtbl;
 };
 
-struct Accordionist : Musician {
+struct Accordionist {
 
     static void play() {
         std::cout << "Accordionist is playing " << std::endl;
@@ -298,7 +227,7 @@ struct Accordionist : Musician {
     AVTBL* vptr = &avtbl;
 };
 
-struct Violist : Musician {
+struct Violist {
     static void play() {
         std::cout << "Violist is playing " << std::endl;
     }
@@ -306,21 +235,18 @@ struct Violist : Musician {
 
 };
 
-namespace {
-    template<typename T, typename U>
 
+    template<typename T, typename U>
     T* Dynamic_cast(U* ptr) {
         if (ptr->vptr->type_info->Typename == typeid(T).name()) {
-
-            return static_cast<T*>(ptr);
-
+            return reinterpret_cast<T*>(ptr);
         }
-        if (ptr->vptr->type_info->Base_Types == typeid(T).name()) {
-
-            return static_cast<T*>(ptr);
-
+        if (ptr->vptr->type_info->Base_Type == typeid(T).name()) {
+            return reinterpret_cast<T*>(ptr);
         }
         return nullptr;
-
     }
-};
+
+void leader(auto* ob){
+    ob->play();
+}
