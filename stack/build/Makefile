@@ -57,10 +57,10 @@ RM = /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/ONLYPROGRAMMING/Desktop/stack
+CMAKE_SOURCE_DIR = /Users/ONLYPROGRAMMING/Downloads/telekinesis/stack
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/ONLYPROGRAMMING/Desktop/stack/build
+CMAKE_BINARY_DIR = /Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ONLYPROGRAMMING/Desktop/stack/build/CMakeFiles /Users/ONLYPROGRAMMING/Desktop/stack/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/build/CMakeFiles /Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ONLYPROGRAMMING/Desktop/stack/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -129,29 +129,29 @@ Stack/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Stack.dir/build.make CMakeFiles/Stack.dir/build
 .PHONY : Stack/fast
 
-StackHeader/Stack.o: StackHeader/Stack.cpp.o
-.PHONY : StackHeader/Stack.o
+StackSrc/Stack.o: StackSrc/Stack.cpp.o
+.PHONY : StackSrc/Stack.o
 
 # target to build an object file
-StackHeader/Stack.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Stack.dir/build.make CMakeFiles/Stack.dir/StackHeader/Stack.cpp.o
-.PHONY : StackHeader/Stack.cpp.o
+StackSrc/Stack.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Stack.dir/build.make CMakeFiles/Stack.dir/StackSrc/Stack.cpp.o
+.PHONY : StackSrc/Stack.cpp.o
 
-StackHeader/Stack.i: StackHeader/Stack.cpp.i
-.PHONY : StackHeader/Stack.i
+StackSrc/Stack.i: StackSrc/Stack.cpp.i
+.PHONY : StackSrc/Stack.i
 
 # target to preprocess a source file
-StackHeader/Stack.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Stack.dir/build.make CMakeFiles/Stack.dir/StackHeader/Stack.cpp.i
-.PHONY : StackHeader/Stack.cpp.i
+StackSrc/Stack.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Stack.dir/build.make CMakeFiles/Stack.dir/StackSrc/Stack.cpp.i
+.PHONY : StackSrc/Stack.cpp.i
 
-StackHeader/Stack.s: StackHeader/Stack.cpp.s
-.PHONY : StackHeader/Stack.s
+StackSrc/Stack.s: StackSrc/Stack.cpp.s
+.PHONY : StackSrc/Stack.s
 
 # target to generate assembly for a file
-StackHeader/Stack.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Stack.dir/build.make CMakeFiles/Stack.dir/StackHeader/Stack.cpp.s
-.PHONY : StackHeader/Stack.cpp.s
+StackSrc/Stack.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Stack.dir/build.make CMakeFiles/Stack.dir/StackSrc/Stack.cpp.s
+.PHONY : StackSrc/Stack.cpp.s
 
 StackSrc/main.o: StackSrc/main.cpp.o
 .PHONY : StackSrc/main.o
@@ -186,9 +186,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Stack"
-	@echo "... StackHeader/Stack.o"
-	@echo "... StackHeader/Stack.i"
-	@echo "... StackHeader/Stack.s"
+	@echo "... StackSrc/Stack.o"
+	@echo "... StackSrc/Stack.i"
+	@echo "... StackSrc/Stack.s"
 	@echo "... StackSrc/main.o"
 	@echo "... StackSrc/main.i"
 	@echo "... StackSrc/main.s"

@@ -53,10 +53,10 @@ RM = /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/ONLYPROGRAMMING/Desktop/stack
+CMAKE_SOURCE_DIR = /Users/ONLYPROGRAMMING/Downloads/telekinesis/stack
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/ONLYPROGRAMMING/Desktop/stack/build
+CMAKE_BINARY_DIR = /Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Stack.dir/depend.make
@@ -69,47 +69,47 @@ include CMakeFiles/Stack.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/Stack.dir/flags.make
 
-CMakeFiles/Stack.dir/StackHeader/Stack.cpp.o: CMakeFiles/Stack.dir/flags.make
-CMakeFiles/Stack.dir/StackHeader/Stack.cpp.o: /Users/ONLYPROGRAMMING/Desktop/stack/StackHeader/Stack.cpp
-CMakeFiles/Stack.dir/StackHeader/Stack.cpp.o: CMakeFiles/Stack.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/ONLYPROGRAMMING/Desktop/stack/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Stack.dir/StackHeader/Stack.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Stack.dir/StackHeader/Stack.cpp.o -MF CMakeFiles/Stack.dir/StackHeader/Stack.cpp.o.d -o CMakeFiles/Stack.dir/StackHeader/Stack.cpp.o -c /Users/ONLYPROGRAMMING/Desktop/stack/StackHeader/Stack.cpp
-
-CMakeFiles/Stack.dir/StackHeader/Stack.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Stack.dir/StackHeader/Stack.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ONLYPROGRAMMING/Desktop/stack/StackHeader/Stack.cpp > CMakeFiles/Stack.dir/StackHeader/Stack.cpp.i
-
-CMakeFiles/Stack.dir/StackHeader/Stack.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Stack.dir/StackHeader/Stack.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ONLYPROGRAMMING/Desktop/stack/StackHeader/Stack.cpp -o CMakeFiles/Stack.dir/StackHeader/Stack.cpp.s
-
 CMakeFiles/Stack.dir/StackSrc/main.cpp.o: CMakeFiles/Stack.dir/flags.make
-CMakeFiles/Stack.dir/StackSrc/main.cpp.o: /Users/ONLYPROGRAMMING/Desktop/stack/StackSrc/main.cpp
+CMakeFiles/Stack.dir/StackSrc/main.cpp.o: /Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/StackSrc/main.cpp
 CMakeFiles/Stack.dir/StackSrc/main.cpp.o: CMakeFiles/Stack.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/ONLYPROGRAMMING/Desktop/stack/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Stack.dir/StackSrc/main.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Stack.dir/StackSrc/main.cpp.o -MF CMakeFiles/Stack.dir/StackSrc/main.cpp.o.d -o CMakeFiles/Stack.dir/StackSrc/main.cpp.o -c /Users/ONLYPROGRAMMING/Desktop/stack/StackSrc/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Stack.dir/StackSrc/main.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Stack.dir/StackSrc/main.cpp.o -MF CMakeFiles/Stack.dir/StackSrc/main.cpp.o.d -o CMakeFiles/Stack.dir/StackSrc/main.cpp.o -c /Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/StackSrc/main.cpp
 
 CMakeFiles/Stack.dir/StackSrc/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Stack.dir/StackSrc/main.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ONLYPROGRAMMING/Desktop/stack/StackSrc/main.cpp > CMakeFiles/Stack.dir/StackSrc/main.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/StackSrc/main.cpp > CMakeFiles/Stack.dir/StackSrc/main.cpp.i
 
 CMakeFiles/Stack.dir/StackSrc/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Stack.dir/StackSrc/main.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ONLYPROGRAMMING/Desktop/stack/StackSrc/main.cpp -o CMakeFiles/Stack.dir/StackSrc/main.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/StackSrc/main.cpp -o CMakeFiles/Stack.dir/StackSrc/main.cpp.s
+
+CMakeFiles/Stack.dir/StackSrc/Stack.cpp.o: CMakeFiles/Stack.dir/flags.make
+CMakeFiles/Stack.dir/StackSrc/Stack.cpp.o: /Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/StackSrc/Stack.cpp
+CMakeFiles/Stack.dir/StackSrc/Stack.cpp.o: CMakeFiles/Stack.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Stack.dir/StackSrc/Stack.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Stack.dir/StackSrc/Stack.cpp.o -MF CMakeFiles/Stack.dir/StackSrc/Stack.cpp.o.d -o CMakeFiles/Stack.dir/StackSrc/Stack.cpp.o -c /Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/StackSrc/Stack.cpp
+
+CMakeFiles/Stack.dir/StackSrc/Stack.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Stack.dir/StackSrc/Stack.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/StackSrc/Stack.cpp > CMakeFiles/Stack.dir/StackSrc/Stack.cpp.i
+
+CMakeFiles/Stack.dir/StackSrc/Stack.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Stack.dir/StackSrc/Stack.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/StackSrc/Stack.cpp -o CMakeFiles/Stack.dir/StackSrc/Stack.cpp.s
 
 # Object files for target Stack
 Stack_OBJECTS = \
-"CMakeFiles/Stack.dir/StackHeader/Stack.cpp.o" \
-"CMakeFiles/Stack.dir/StackSrc/main.cpp.o"
+"CMakeFiles/Stack.dir/StackSrc/main.cpp.o" \
+"CMakeFiles/Stack.dir/StackSrc/Stack.cpp.o"
 
 # External object files for target Stack
 Stack_EXTERNAL_OBJECTS =
 
-Stack: CMakeFiles/Stack.dir/StackHeader/Stack.cpp.o
 Stack: CMakeFiles/Stack.dir/StackSrc/main.cpp.o
+Stack: CMakeFiles/Stack.dir/StackSrc/Stack.cpp.o
 Stack: CMakeFiles/Stack.dir/build.make
 Stack: CMakeFiles/Stack.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/ONLYPROGRAMMING/Desktop/stack/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable Stack"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable Stack"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Stack.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -121,6 +121,6 @@ CMakeFiles/Stack.dir/clean:
 .PHONY : CMakeFiles/Stack.dir/clean
 
 CMakeFiles/Stack.dir/depend:
-	cd /Users/ONLYPROGRAMMING/Desktop/stack/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/ONLYPROGRAMMING/Desktop/stack /Users/ONLYPROGRAMMING/Desktop/stack /Users/ONLYPROGRAMMING/Desktop/stack/build /Users/ONLYPROGRAMMING/Desktop/stack/build /Users/ONLYPROGRAMMING/Desktop/stack/build/CMakeFiles/Stack.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/ONLYPROGRAMMING/Downloads/telekinesis/stack /Users/ONLYPROGRAMMING/Downloads/telekinesis/stack /Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/build /Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/build /Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/build/CMakeFiles/Stack.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/Stack.dir/depend
 

@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/Users/ONLYPROGRAMMING/Desktop/stack/StackHeader/Stack.cpp" "CMakeFiles/Stack.dir/StackHeader/Stack.cpp.o" "gcc" "CMakeFiles/Stack.dir/StackHeader/Stack.cpp.o.d"
-  "/Users/ONLYPROGRAMMING/Desktop/stack/StackSrc/main.cpp" "CMakeFiles/Stack.dir/StackSrc/main.cpp.o" "gcc" "CMakeFiles/Stack.dir/StackSrc/main.cpp.o.d"
+  "/Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/StackSrc/Stack.cpp" "CMakeFiles/Stack.dir/StackSrc/Stack.cpp.o" "gcc" "CMakeFiles/Stack.dir/StackSrc/Stack.cpp.o.d"
+  "/Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/StackSrc/main.cpp" "CMakeFiles/Stack.dir/StackSrc/main.cpp.o" "gcc" "CMakeFiles/Stack.dir/StackSrc/main.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.
