@@ -1,18 +1,14 @@
 #include "../StackHeader/Stack.h"
 
 
-int main() {
-    stack<int> s = {5,7,8,9,5,4,3,2,1}; 
-    stack<int> s1 = {4,3,1,2};
+using namespace g3;
 
-    s1._swap(s);
-    // std::cout << s << std::endl; 
-    std::cout << s1 << std::endl; 
-    std::cout << s << std::endl;
-    // s.push(55);
-    // std::cout << s << std::endl; 
-    // s.pop();
-    // std::cout << s << std::endl; 
-    // std::cout << s.top() << std::endl; 
+int main(int argc, char const *argv[])
+{
+     stack<int> s = {1,2,3,4,5,6,7,8,9,10};
+     stack<int> s1 = {1,2,3,4,5,6,7,11,12,34};
 
+     s.push(55);
+     std::cout << s.top();
+     return 0;
 }
