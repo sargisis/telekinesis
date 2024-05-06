@@ -1,130 +1,110 @@
-#ifndef __STACK_HPP__
-#define __STACK_HPP__
+#include "../StackHeader/Stack.h"
 
-#include "Stack.h"
+using namespace g3;
 
-template<typename T>
-stack<T>::stack()  
-   
+template<typename T, typename Container>
+stack<T, Container>::stack() = default;
+
+template<typename T, typename Container>
+stack<T, Container>::stack(const stack& rhv) 
+    : ob(rhv.ob) {}
+
+template<typename T, typename Container>
+stack<T, Container>::stack(stack&& rhv) noexcept 
+    : ob(std::move(rhv.ob)) {}
+
+template<typename T, typename Container>
+stack<T, Container>::stack(std::initializer_list<T> init) 
+    : stack()  
 {}
 
-template<typename T>
-stack<T>::stack(const stack& rhv)  
- : stack()
-{
-    this->ob = rhv.ob;
-}
-
-template<typename T>
-stack<T>::stack(stack&& rhv) 
+template<typename T, typename Container>
+template<typename InputIt>
+stack<T, Container>::stack(InputIt first, InputIt last)
     : stack()
 {
-    this->ob = std::move(rhv.ob);
-}
-
-template<typename T>
-stack<T>::~stack() noexcept 
-{}
-
-template<typename T>
-stack<T>::stack(std::initializer_list<T> initlist)        
-{
-    for(const T& val : initlist){
-        this->ob.push_back(val);
+    for(auto it = first; it != last; ++it) {
+        ob.push(*it);
     }
 }
-template<typename T>
-const stack<T>& stack<T>::operator=(const stack& rhv){
-    if (this != &rhv){
-        ob = rhv.ob;
+
+template<typename T, typename Container>
+stack<T, Container>::~stack() noexcept = default;
+
+template<typename T, typename Container>
+const stack<T, Container>& stack<T, Container>::operator=(const stack& rhv) {
+    if (this != &rhv) {
+        this->ob = rhv.ob;
     }
-    return *this; 
+    return *this;
 }
 
-template<typename T>
-const stack<T>& stack<T>::operator=(stack&& rhv){
-    if (this != &rhv){
-        ob = std::move(rhv.ob);
+template<typename T, typename Container>
+const stack<T, Container>& stack<T, Container>::operator=(stack&& rhv) {
+    if (this != &rhv) {
+        this->ob = std::move(rhv.ob);
     }
-    return *this; 
+    return *this;
 }
 
-template<typename T>
-stack<T>::referance stack<T>::top(){
-   
+template<typename T, typename Container>
+stack<T, Container>::reference stack<T, Container>::top() {
     return ob.back();
 }
 
-template<typename T>
-void stack<T>::_swap(stack& rhv){
-    std::swap(ob, rhv.ob);
-    // std::swap(size() , rhv.size());
+template<typename T, typename Container> 
+stack<T, Container>::const_reference stack<T, Container>::top() const {
+    return ob.back();
 }
 
-template<typename T>
-bool stack<T>::empty() {
-    return !ob.empty();
+template<typename T, typename Container>
+bool stack<T, Container>::empty() const {
+    return ob.empty();
 }
 
-template<typename T>
-stack<T>::size_type stack<T>::size() const {
+template<typename T, typename Container>
+typename stack<T, Container>::size_type stack<T, Container>::size() const {
     return ob.size();
 }
 
-template<typename T>
-void stack<T>::push(const_referance elem){
-    ob.push_back(elem);
+template<typename T, typename Container>
+void stack<T, Container>::push(const_reference val) {
+    ob.push_back(val);
 }
 
-template<typename T>
-void stack<T>::pop(){
+template<typename T, typename Container>
+void stack<T, Container>::pop() {
     if (!ob.empty()) {
         ob.pop_back();
     }
 }
 
-template<typename T>
-stack<T>::referance stack<T>::operator[](size_type index) {
-    return ob[index];
+template<typename T, typename Container>
+bool stack<T, Container>::operator==(const stack& other) {
+    return ob.size() == other.size();
 }
 
-template<typename T>
-bool operator<( stack<T>& lhs,  stack<T> &rhs){
-     return lhs.size() < rhs.size(); 
+template<typename T, typename Container>
+bool stack<T, Container>::operator!=(const stack& other) {
+    return ob.size() != other.size();
 }
 
-template<typename T>
-bool operator<=( stack<T>& lhs,  stack<T>& rhs){
-     return lhs.size() <= rhs.size();
+template<typename T, typename Container>
+bool stack<T, Container>::operator<(const stack& other) {
+    return ob.size() < other.size();
 }
 
-template<typename T>
-bool operator>( stack<T>& lhs,  stack<T>& rhs){
-    return  lhs.size() > rhs.size();
+template<typename T, typename Container>
+bool stack<T, Container>::operator<=(const stack& other) {
+    return ob.size() <= other.size();
 }
 
-template<typename T>
-bool operator>=( stack<T>& lhs,  stack<T>& rhs){
-    return lhs.size() >= rhs.size();
+template<typename T, typename Container>
+bool stack<T, Container>::operator>(const stack& other)  {
+    return ob.size() > other.size();
 }
 
-template<typename T>
-bool operator==( stack<T>& lhs,  stack<T>& rhs){
-    return lhs.size() == rhs.size();     
+template<typename T, typename Container>
+bool stack<T, Container>::operator>=(const stack& other) {
+    return ob.size() >= other.size();
 }
-
-template<typename T>
-bool operator!=( stack<T>& lhs,  stack<T>& rhs){
-    return lhs.size() != rhs.size();
-}
-
-template<typename T>
-std::ostream& operator<<(std::ostream& os , stack<T>& rhv){
-    for (size_t i = 0; i < rhv.size(); ++i){
-        os << rhv[i] << " ";
-    }
-    return os; 
-}
-
-
-#endif // STACK_HPP__
