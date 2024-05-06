@@ -1,65 +1,56 @@
-#ifndef __STACK_H__
-#define __STACK_H__
+#ifndef __STACK__H__
+#define __STACK__H__
 
+#include <deque>
 #include <iostream>
-#include <vector> 
+namespace g3
+{
+template <typename T, typename Container = std::deque<T>>
+class stack
+{
+public:
+    using container_type = Container;
+    using value_type = T;
+    using size_type = std::size_t;
+    using reference = value_type&;
+    using const_reference = const value_type&;
 
-template<typename T>
+public:
+    stack();
+    stack(const stack& rhv);
+    stack(stack&& rhv) noexcept;
+    stack(std::initializer_list<value_type> init);
+    template <typename InputIt>
+    stack(InputIt first, InputIt last);
+    ~stack() noexcept;
 
-class stack {
+    const stack& operator=(const stack& rhv);
+    const stack& operator=(stack&& rhv);
+
+public:
+    reference top();
+    const_reference top() const;
+
+    bool empty() const;
+    size_type size() const;
+
+    void push(const_reference val);
+    void pop();
+
+public:
+
+    bool operator==(const stack& other);
+    bool operator!=(const stack& other);
+    bool operator<(const stack& other);
+    bool operator<=(const stack& other);
+    bool operator>(const stack& other);
+    bool operator>=(const stack& other);
+
 private:
-     std::vector<T> ob;
-public:
-  using value_type = T;
-  using size_type = std::size_t;
-  using referance = value_type&;
-  using const_referance = const value_type&;
-  using pointer = value_type*;
-  using const_pointer = const value_type*;
-public:
- stack();
- stack(const stack&);
- stack(stack&&);
- ~stack() noexcept;
- const stack& operator=(const stack<T>&);
- const stack& operator=(stack<T>&&);
- stack(std::initializer_list<T>);
- void push(const_referance );
- void pop();
- public:
- referance top();
- size_type size() const;
- void _swap(stack&);
- bool empty();
- 
- referance operator[](size_type index);
-
+    Container ob;
 };
+}
 
-template<typename T>
-bool operator<( stack<T>& lhs,  stack<T>& rhs);
+#include "../StackSrc/Stack.cpp"
 
-template<typename T>
-bool operator<=( stack<T>& lhs, stack<T>& rhs);
-
-template<typename T>
-bool operator>( stack<T>& lhs, stack<T>& rhs);
-
-template<typename T>
-bool operator>=( stack<T>& lhs, stack<T>& rhs);
-
-template<typename T>
-bool operator==( stack<T>& lhs, stack<T>& rhs);
-
-template<typename T>
-bool operator!=( stack<T>& lhs,  stack<T>& rhs);
-
-template<typename T>
-std::ostream& operator<<(std::ostream& os , stack<T>& rhv);
-
-
-
-#include "Stack.cpp"
-
-#endif //  __STACK_H__
-
+#endif // _STACK_H_
