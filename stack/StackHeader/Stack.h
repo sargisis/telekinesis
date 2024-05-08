@@ -51,6 +51,6 @@ private:
 };
 }
 
-#include "../StackSrc/Stack.cpp"
+#include "../StackSrc/Stack.hpp"
 
 #endif // _STACK_H_

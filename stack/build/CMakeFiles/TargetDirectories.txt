@@ -1,3 +1,0 @@
-/Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/build/CMakeFiles/Stack.dir
-/Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/build/CMakeFiles/edit_cache.dir
-/Users/ONLYPROGRAMMING/Downloads/telekinesis/stack/build/CMakeFiles/rebuild_cache.dir

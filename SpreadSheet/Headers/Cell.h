@@ -5,7 +5,7 @@
 #include <string>
 #include <ostream>
 #include <istream>
-
+#include <iomanip>
 
 class Cell {
 private:

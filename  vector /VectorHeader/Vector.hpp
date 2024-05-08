@@ -1,276 +1,249 @@
-#ifndef __VECTOR_HPP__
-#define __VECTOR_HPP__
+#ifndef __VECTOR__H__
+#define __VECTOR__H__
 
 #include <iostream>
-#include <stdexcept>
-#include <cstddef>
-#include <initializer_list>
+#include <memory>
 
-template<typename T>
-class Vector {
-private:
-   using value_type = T;
-   using referance = value_type&;
-   using size_type = std::size_t;
-   using const_referance = const value_type&;
-   using difference_type = std::ptrdiff_t;
-   using pointer = value_type*;
-   using const_pointer = const value_type*;
+namespace g3
+{
 
-   class Allocator {
-    public:
-        T* ptr = nullptr; 
-    public:
-        using value_type = T;
-        using pointer = value_type*;
-        using const_pointer = const value_type*;
-        using size_type = std::size_t;
-    public:
-        Allocator() = default;
-        Allocator(const Allocator& rhv) = default;
-        virtual ~Allocator() = default;
-    public:
-        pointer allocate(size_type count );
-        
-        template<typename... Args>
-        void constract(pointer ptr , Args... args);
+template <typename T, typename Allocator = std::allocator<T>>
+class vector
+{
+public:
+    using value_type = T;
+    using allocator_type = Allocator;
+    using size_type = std::size_t;    
+    using reference = value_type&;
+    using const_reference = const value_type&;
+    using pointer = value_type*;
+    using const_pointer = const value_type*;
 
-        void deallocate(void* ptr , size_type count);
+public:
+    class const_iterator;
+    class iterator;
+    class const_reverse_iterator;
+    class reverse_iterator;
 
-        template<typename... Args>
-        void destroy(pointer ptr , Args... args);
+public:
 
-        size_type max_size();
-   };
-   public:    
-    class const_iterator {
-        friend class Vector<value_type>;
-    private:
-        pointer p;
-    protected:
-         const_iterator(pointer ptr);
-    public:
-        const_iterator();
-        const_iterator(const const_iterator& rhv);
-        const_iterator(const_iterator&& rhv);
+    vector();
+    vector(const vector& rhv);
+    vector(vector&& rhv);
+    vector(std::initializer_list<value_type> init);
+    vector(size_type size, const_reference val = value_type{});
+    template <typename InputIt>
+    vector(InputIt first, InputIt last);
+    ~vector();
 
-        ~const_iterator() noexcept;
+public:
 
-        const const_iterator& operator=(const const_iterator& rhv);
-        const const_iterator& operator=(const_iterator&& rhv);
+    const vector& operator=(const vector& rhv);
+    const vector& operator=(vector&& rhv);
 
-        const_referance operator*() const;
-        const_pointer operator->() const;
+    allocator_type get_allocator();
 
-        const const_iterator operator+(size_type val) const;
-        const const_iterator operator-(size_type val) const;
-        const const_iterator& operator-=(size_type val) const;
-        const const_iterator& operator+=(size_type val) const;
-        const const_iterator& operator++();
-        const const_iterator operator++(int);
-        const const_iterator& operator--();
-        const const_iterator operator--(int);
+public:
+    reference at(size_type pos);
+    const_reference at(size_type pos) const;
 
-        const_referance operator[](size_type ind) const;
+    reference operator[](size_type pos);
+    const_reference operator[](size_type pos) const;
 
-        bool operator==(const const_iterator& rhv) const;
-        bool operator!=(const const_iterator& rhv) const;
-        bool operator<(const const_iterator& rhv) const;
-        bool operator>(const const_iterator& rhv) const;
-        bool operator<=(const const_iterator& rhv) const;
-        bool operator>=(const const_iterator& rhv) const;
-        
-    };
-    class iterator : public const_iterator {
-        friend class Vector<value_type>;
-    private:
-        pointer p;
-    protected:
-         iterator(pointer ptr);
-    public:
-        iterator();
-        iterator(const iterator& rhv);
-        iterator(iterator&& rhv);
-        
-        referance operator*();
-        pointer operator->();
-    };
+    reference front();
+    const_reference front() const;
 
-    public:    
-    class const_reverse_iterator {
-        friend class Vector<value_type>;
-    private:
-        pointer p;
-    protected:
-        const_reverse_iterator(pointer ptr);
-    public:
-        const_reverse_iterator();
-        const_reverse_iterator(const const_reverse_iterator& rhv);
-        const_reverse_iterator(const_reverse_iterator&& rhv);
+    reference back();
+    const_reference back() const;
 
-        ~const_reverse_iterator() noexcept;
-
-        const const_reverse_iterator& operator=(const const_reverse_iterator& rhv);
-        const const_reverse_iterator& operator=(const_reverse_iterator&& rhv);
-
-        const_referance operator*() const;
-        const_pointer operator->() const;
-
-        const const_reverse_iterator operator+(size_type val) const;
-        const const_reverse_iterator operator-(size_type val) const;
-        const const_reverse_iterator& operator-=(size_type val) const;
-        const const_reverse_iterator& operator+=(size_type val) const;
-        const const_reverse_iterator& operator++();
-        const const_reverse_iterator operator++(int);
-        const const_reverse_iterator& operator--();
-        const const_reverse_iterator operator--(int);
-
-        const_referance operator[](size_type ind) const;
-
-        bool operator==(const const_reverse_iterator& rhv) const;
-        bool operator!=(const const_reverse_iterator& rhv) const;
-        bool operator<(const const_reverse_iterator& rhv) const;
-        bool operator>(const const_reverse_iterator& rhv) const;
-        bool operator<=(const const_reverse_iterator& rhv) const;
-        bool operator>=(const const_reverse_iterator& rhv) const;
-        
-    };
-    class reverse_iterator : public const_reverse_iterator {
-        friend class Vector<value_type>;
-    private:
-            pointer p;
-    protected:
-         reverse_iterator(pointer ptr);
-    public:
-        reverse_iterator();
-        reverse_iterator(const reverse_iterator& rhv);
-        reverse_iterator(reverse_iterator&& rhv);
-        
-        referance operator*();
-        pointer operator->();
-    };
-
-   public:
-   Vector();
-   
-   ~Vector();
-   
-   Vector(std::initializer_list<T> initList);
-   
-   Vector(const_referance);
-   
-   Vector(const Vector& );
-   
-   Vector(Vector&& );
-   
-   const Vector& operator=(const Vector&);
-   
-   const Vector& operator=(Vector&&);  
-   
-    void push_back(const_referance);
-
-    void pop_back(); 
-  
-    void recap()  noexcept;
+public:
+    iterator begin();
+    const_iterator begin() const;
+    const_iterator cbegin() const;
     
-    void insert(size_type , const_referance);
-   
-    void erase(size_type);
-   
-    void resize(value_type , const_referance);
-   
+    iterator end();
+    const_iterator end() const;
+    const_iterator cend() const;
+    
+    iterator rbegin();
+    const_iterator rbegin() const;
+    const_iterator crbegin() const;
+    
+    iterator rend();
+    const_iterator rend() const;
+    const_iterator crend() const;
+    
+public:
+    bool empty() const;
+    size_type size() const;
+    size_type capacity() const;
+
+    void reserve(size_type new_cap);
+
+public:
     void clear() noexcept;
-   
-    void _swap( Vector&);
+
+    iterator insert(const_iterator pos, const_reference val);
+    iterator insert(const_iterator pos, size_type count, const_reference val);
+    iterator insert(const_iterator pos, std::initializer_list<value_type> init);
+    template <typename InputIt>
+    iterator insert(const_iterator pos, InputIt first, InputIt last);
+
+    iterator erase(const_iterator pos);
+    iterator erase(const_iterator first, const_iterator last);
+
+    void push_back(const_reference val);
+    void pop_back();
+
+    void resize(size_type new_size, const_reference val = value_type{});
+
+public:
+    bool operator==(const vector& other) const;
+    bool operator!=(const vector& other) const;
+    bool operator<(const vector& other) const;
+    bool operator<=(const vector& other) const;
+    bool operator>(const vector& other) const;
+    bool operator>=(const vector& other) const;
+
+private:
+    int compare(const vector& other) const;
     
-  const_pointer data() const;
-
-  const_referance operator[](size_type) const; 
-  
-  const_referance front() const;  
-  
-  const_referance back() const; 
-  
-  const_referance at(size_type) const;
-   
-   referance front(); 
-    
-   referance back();
-   
-   referance operator[](size_type);
-
-   referance at(size_type);
-
-    pointer data(); 
-
-   
-   constexpr bool empty() const;
-   
-   constexpr size_t Size() const; 
-   
-   constexpr size_t max_size() const; 
-   
-   constexpr size_t Capacity() const; 
-   
-// Iterators
-
-    const_iterator cbegin() const; //O(1)
-    
-    iterator begin(); //O(1)
-    
-    const_iterator cend() const; //O(1)
-    
-    iterator end(); //O(1)
-    
-    const_reverse_iterator rcbegin() const; //O(1)
-    
-    reverse_iterator rbegin(); //O(1)
-    
-    const_reverse_iterator rcend() const; //O(1)
-    
-    reverse_iterator rend(); //O(1)
-
-    public:
-    iterator insert(iterator pos, const_referance x);//O(n)
-
-    void insert(iterator pos, const int n, const T& x); //O(n)
-
-    template <typename InputIterator>
-
-    void insert(iterator pos, InputIterator f, InputIterator l); //O(n)
-    
-    iterator erase(iterator pos); //O(n)
-    iterator erase(iterator f, iterator l); //O(n)
-
-   private:
-   T* m_ptr; 
-   size_t _size; 
-   size_t _capacity;
-
+private:
+    size_type size_;
+    size_type capacity_;
+    pointer arr_;
 };
 
-template<typename T, typename U>
-bool operator==(const Vector<T>& lhv , const Vector<U>& rhv);
+template <typename T, typename Allocator>
+class vector<T, Allocator>::const_iterator
+{
+    friend class vector<T, Allocator>;
+protected:
+    pointer ptr;
+private:
+    const_iterator(pointer ptr);
+public:
+    const_iterator() = default;
+    const_iterator(const const_iterator&) = default;      
+    const_iterator(const_iterator&&) = default;
 
-template<typename T, typename U>
-bool operator!=(const Vector<T>& lhv, const Vector<U>& rhv);
+    const const_iterator& operator=(const const_iterator&) = default;      
+    const const_iterator& operator=(const_iterator&&) = default;
 
-template<typename T, typename U>
-bool operator>(const Vector<T>& lhv, const Vector<U>& rhv);
+    const_iterator operator+(size_type n) const;      
+    const_iterator operator-(size_type n) const;
 
-template<typename T, typename U>
-bool operator>=(const Vector<T>& lhv, const Vector<U>& rhv);
+    const_iterator& operator++();
+    const_iterator operator++(int);
+    const_iterator& operator--();
+    const_iterator operator--(int);
 
-template<typename T, typename U>
-bool operator<(const Vector<T>& lhv, const Vector<U>& rhv);
+    const_reference operator*() const;
+    const_pointer operator->() const;
 
-template<typename T, typename U>
-bool operator<=(const Vector<T>& lhv, const Vector<U>& rhv);
+    const_reference operator[](size_type pos) const;
+
+    bool operator==(const const_iterator& other) const;      
+    bool operator!=(const const_iterator& other) const;      
+    bool operator<(const const_iterator& other) const;      
+    bool operator<=(const const_iterator& other) const;      
+    bool operator>(const const_iterator& other) const;      
+    bool operator>=(const const_iterator& other) const;      
+};
+
+template <typename T, typename Allocator>
+class vector<T, Allocator>::iterator : vector<T, Allocator>::const_iterator
+{
+    friend class vector<T, Allocator>;
+private:
+    iterator(pointer ptr);
+public:
+    iterator() = default;
+    iterator(const iterator&) = default;      
+    iterator(iterator&&) = default;
+
+    const iterator& operator=(const iterator&) = default;      
+    const iterator& operator=(iterator&&) = default;
+
+    iterator operator+(size_type n) const;      
+    iterator operator-(size_type n) const;
+
+    iterator& operator++();
+    iterator operator++(int);
+    iterator& operator--();
+    iterator operator--(int);
+
+    reference operator*();
+    pointer operator->();
+
+    reference operator[](size_type pos) const;
+};
 
 
-template<typename T>
-std::ostream& operator<<(std::ostream& os , const Vector<T>& rhv);
+template <typename T, typename Allocator>
+class vector<T, Allocator>::const_reverse_iterator
+{
+    friend class vector<T, Allocator>;
+protected:
+    pointer ptr;
+private:
+    const_reverse_iterator(pointer ptr);
+public:
+    const_reverse_iterator() = default;
+    const_reverse_iterator(const const_reverse_iterator&) = default;      
+    const_reverse_iterator(const_reverse_iterator&&) = default;
 
-#include "Vector.cpp"
+    const const_reverse_iterator& operator=(const const_reverse_iterator&) = default;      
+    const const_reverse_iterator& operator=(const_reverse_iterator&&) = default;
 
-#endif // VECTOR_HPP
+    const_reverse_iterator operator+(size_type n) const;      
+    const_reverse_iterator operator-(size_type n) const;
+
+    const_reverse_iterator& operator++();
+    const_reverse_iterator operator++(int);
+    const_reverse_iterator& operator--();
+    const_reverse_iterator operator--(int);
+
+    const_reference operator*() const;
+    const_pointer operator->() const;
+
+    const_reference operator[](size_type pos) const;
+
+    bool operator==(const const_reverse_iterator& other) const;      
+    bool operator!=(const const_reverse_iterator& other) const;      
+    bool operator<(const const_reverse_iterator& other) const;      
+    bool operator<=(const const_reverse_iterator& other) const;      
+    bool operator>(const const_reverse_iterator& other) const;      
+    bool operator>=(const const_reverse_iterator& other) const;      
+};
+
+template <typename T, typename Allocator>
+class vector<T, Allocator>::reverse_iterator : vector<T, Allocator>::const_reverse_iterator
+{
+    friend class vector<T, Allocator>;
+private:
+    reverse_iterator(pointer ptr);
+public:
+    reverse_iterator() = default;
+    reverse_iterator(const reverse_iterator&) = default;      
+    reverse_iterator(reverse_iterator&&) = default;
+
+    const reverse_iterator& operator=(const reverse_iterator&) = default;      
+    const reverse_iterator& operator=(reverse_iterator&&) = default;
+
+    reverse_iterator operator+(size_type n) const;      
+    reverse_iterator operator-(size_type n) const;
+
+    reverse_iterator& operator++();
+    reverse_iterator operator++(int);
+    reverse_iterator& operator--();
+    reverse_iterator operator--(int);
+
+    reference operator*();
+    pointer operator->();
+
+    reference operator[](size_type pos) const;
+};
+
+}
+#endif

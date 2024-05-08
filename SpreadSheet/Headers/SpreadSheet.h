@@ -7,10 +7,7 @@ class SpreadSheet {
 private:
     Cell** ob; 
 private:
-    struct POINT {
-        int x; 
-        int y; 
-    } ob1;
+   
 public:
  SpreadSheet();
  ~SpreadSheet() noexcept;

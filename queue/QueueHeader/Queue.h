@@ -1,62 +1,59 @@
-#ifndef __QUEUE_H__
-#define __QUEUE_H__
+#ifndef __QUEUE__H__
+#define __QUEUE__H__
 
-#include <iostream>
 #include <deque>
-
-
-template<typename T>
+namespace g3
+{
+template <typename T, typename Container = std::deque<T>>
 class queue {
+
+public:
+    using container_type = Container;
+    using value_type = T;
+    using size_type = std::size_t;
+    using reference = value_type&;
+    using const_reference = const value_type&;
+
+public:
+
+    queue();
+    queue(const queue& rhv);
+    queue(queue&& rhv);
+    queue(std::initializer_list<value_type> init);
+    template <typename InputIt>
+    queue(InputIt first, InputIt last);
+    ~queue() noexcept;
+
+    const queue& operator=(const queue& rhv);
+    const queue& operator=(queue&& rhv);
+
+public:
+    reference front();
+    const_reference front() const;
+
+    reference back();
+    const_reference back() const;
+
+    bool empty() const;
+    size_type size() const;
+
+    void push(const_reference val);
+    void pop();
+
+public:
+
+    bool operator==(const queue& other);
+    bool operator!=(const queue& other);
+    bool operator<(const queue& other);
+    bool operator<=(const queue& other);
+    bool operator>(const queue& other);
+    bool operator>=(const queue& other);
+
+
 private:
-  std::deque<T> ob; 
-public:
-  using value_type = T;
-  using size_type = std::size_t;
-  using referance = value_type&;
-  using const_referance = const value_type&;
-  using pointer = value_type*;
-  using const_pointer = const value_type*;
-public:
- queue();
- queue(const queue&);
- queue(queue&&);
- ~queue();
- const queue& operator=(const queue<T>&);
- const queue& operator=(queue<T>&&);
- queue(std::initializer_list<T>);
- void push(const_referance);
- void pop();
- public:
- size_type front() const;
- size_type size() const;
- void swap( queue&);
- bool empty() const;
- referance operator [](size_type index);
- 
+    Container ob;
 };
+}
+ #include "../QueueSrc/Queue.hpp"
 
-template<typename T>
-bool operator<(const queue<T> lhs, const queue<T> rhs);
-
-template<typename T>
-bool operator<=(const queue<T> lhs, const queue<T> rhs);
-
-template<typename T>
-bool operator>(const queue<T> lhs, const queue<T> rhs);
-
-template<typename T>
-bool operator>=(const queue<T> lhs, const queue<T> rhs);
-
-template<typename T>
-bool operator==(const queue<T> lhs, const queue<T> rhs);
-
-template<typename T>
-bool operator!=(const queue<T> lhs, const queue<T> rhs);
-
-template<typename T>
-std::ostream& operator<<(std::ostream& os , const queue<T>&);
-
-#include "Queue.hpp"
-
-#endif //  __STACK_H__
-
+#endif // 

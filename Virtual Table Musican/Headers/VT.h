@@ -239,10 +239,10 @@ struct Violist {
     template<typename T, typename U>
     T* Dynamic_cast(U* ptr) {
         if (ptr->vptr->type_info->Typename == typeid(T).name()) {
-            return reinterpret_cast<T*>(ptr);
+            return (T*)ptr;
         }
         if (ptr->vptr->type_info->Base_Type == typeid(T).name()) {
-            return reinterpret_cast<T*>(ptr);
+            return (T*)ptr;
         }
         return nullptr;
     }
