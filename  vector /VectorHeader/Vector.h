@@ -1,11 +1,11 @@
-#ifndef __VECTOR__H__
-#define __VECTOR__H__
+#ifndef __VECTOR__HPP__
+#define __VECTOR__HPP__
 
 #include <iostream>
 #include <memory>
+#include <exception>
 
-namespace g3
-{
+namespace g3 {
 
 template <typename T, typename Allocator = std::allocator<T>>
 class vector
@@ -31,7 +31,7 @@ public:
     vector(const vector& rhv);
     vector(vector&& rhv);
     vector(std::initializer_list<value_type> init);
-    vector(size_type size, const_reference val = value_type{});
+    vector(size_type size, const_reference val);
     template <typename InputIt>
     vector(InputIt first, InputIt last);
     ~vector();
@@ -95,7 +95,7 @@ public:
     void push_back(const_reference val);
     void pop_back();
 
-    void resize(size_type new_size, const_reference val = value_type{});
+    void resize(size_type new_size, const_reference val);
 
 public:
     bool operator==(const vector& other) const;
@@ -106,12 +106,12 @@ public:
     bool operator>=(const vector& other) const;
 
 private:
-    int compare(const vector& other) const;
-    
+      int compare(const vector& other) const;
 private:
     size_type size_;
     size_type capacity_;
     pointer arr_;
+    allocator_type alloc;
 };
 
 template <typename T, typename Allocator>
@@ -122,13 +122,15 @@ protected:
     pointer ptr;
 private:
     const_iterator(pointer ptr);
+protected:
+     int compare(const const_iterator& other) const;
 public:
     const_iterator() = default;
     const_iterator(const const_iterator&) = default;      
     const_iterator(const_iterator&&) = default;
 
-    const const_iterator& operator=(const const_iterator&) = default;      
-    const const_iterator& operator=(const_iterator&&) = default;
+    const_iterator& operator=(const const_iterator&) = default;      
+    const_iterator& operator=(const_iterator&&) = default;
 
     const_iterator operator+(size_type n) const;      
     const_iterator operator-(size_type n) const;
@@ -152,7 +154,7 @@ public:
 };
 
 template <typename T, typename Allocator>
-class vector<T, Allocator>::iterator : vector<T, Allocator>::const_iterator
+class vector<T, Allocator>::iterator : public vector<T, Allocator>::const_iterator
 {
     friend class vector<T, Allocator>;
 private:
@@ -162,8 +164,8 @@ public:
     iterator(const iterator&) = default;      
     iterator(iterator&&) = default;
 
-    const iterator& operator=(const iterator&) = default;      
-    const iterator& operator=(iterator&&) = default;
+     iterator& operator=(const iterator&) = default;      
+     iterator& operator=(iterator&&) = default;
 
     iterator operator+(size_type n) const;      
     iterator operator-(size_type n) const;
@@ -188,13 +190,15 @@ protected:
     pointer ptr;
 private:
     const_reverse_iterator(pointer ptr);
+protected:
+     int compare(const const_reverse_iterator& other) const;
 public:
     const_reverse_iterator() = default;
     const_reverse_iterator(const const_reverse_iterator&) = default;      
     const_reverse_iterator(const_reverse_iterator&&) = default;
 
-    const const_reverse_iterator& operator=(const const_reverse_iterator&) = default;      
-    const const_reverse_iterator& operator=(const_reverse_iterator&&) = default;
+     const_reverse_iterator& operator=(const const_reverse_iterator&) = default;      
+     const_reverse_iterator& operator=(const_reverse_iterator&&) = default;
 
     const_reverse_iterator operator+(size_type n) const;      
     const_reverse_iterator operator-(size_type n) const;
@@ -218,7 +222,7 @@ public:
 };
 
 template <typename T, typename Allocator>
-class vector<T, Allocator>::reverse_iterator : vector<T, Allocator>::const_reverse_iterator
+class vector<T, Allocator>::reverse_iterator : public vector<T, Allocator>::const_reverse_iterator
 {
     friend class vector<T, Allocator>;
 private:
@@ -244,6 +248,7 @@ public:
 
     reference operator[](size_type pos) const;
 };
-
 }
-#endif
+
+#include "Vector.hpp"
+#endif // VECTOR_HPP
