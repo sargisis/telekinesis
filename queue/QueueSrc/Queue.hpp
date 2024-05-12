@@ -83,7 +83,7 @@ void g3::queue<T,Container>::push(const_reference val) {
 
 template<typename T, typename Container>
 void g3::queue<T,Container>::pop() {
-    while(!ob.empty()) {
+    if(!ob.empty()) {
         ob.pop_back();
     }
 }
