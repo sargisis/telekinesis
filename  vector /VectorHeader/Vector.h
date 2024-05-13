@@ -96,7 +96,7 @@ public:
     void pop_back();
 
     void resize(size_type new_size, const_reference val);
-
+ 
 public:
     bool operator==(const vector& other) const;
     bool operator!=(const vector& other) const;

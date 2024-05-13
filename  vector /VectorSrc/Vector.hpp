@@ -128,22 +128,22 @@ g3::vector<T,Allocator>::const_reference g3::vector<T,Allocator>::operator[](siz
 
 template<typename T, typename Allocator>
 g3::vector<T,Allocator>::reference g3::vector<T,Allocator>::front() {
-    return begin();
+    return arr_[0];
 }
 
 template<typename T, typename Allocator>
 g3::vector<T,Allocator>::const_reference g3::vector<T,Allocator>::front() const{
-    return cbegin();
+    return arr_[0];
 }
 
 template<typename T, typename Allocator>
 g3::vector<T,Allocator>::reference g3::vector<T,Allocator>::back() {
-    return end();
+    return arr_[size_ - 1];
 }
 
 template<typename T, typename Allocator>
 g3::vector<T,Allocator>::const_reference g3::vector<T,Allocator>::back() const {
-    return cend();
+    return arr_[size_ - 1];
 }
 
 template<typename T,typename Allocator>
@@ -230,7 +230,7 @@ void g3::vector<T,Allocator>::reserve(size_type new_cap) {
         size_ = new_cap;
     }else if (new_cap > size_) {
         if (new_cap > capacity_) {
-            capacity_ = new_cap * 2;
+            capacity_ = (new_cap == 0) ? 1 : new_cap * 2; 
         
             T* tmp = new T[capacity_];
             for (size_type i = 0; i < size_; ++i ) {
@@ -241,7 +241,6 @@ void g3::vector<T,Allocator>::reserve(size_type new_cap) {
             tmp = nullptr;
         }
     }
-    size_ = new_cap; 
 }
 
 // end capacity's
@@ -261,7 +260,7 @@ void g3::vector<T,Allocator>::clear() noexcept {
 template<typename T, typename Allocator>
 g3::vector<T,Allocator>::iterator g3::vector<T,Allocator>::insert(const_iterator pos , const_reference val) {
     
-    size_type index = cbegin() - pos; 
+    size_type index = pos.ptr - arr_;
 
     if (size_ == capacity_) {
         capacity_ = (capacity_ == 0) ? 1 : capacity_ * 2;
@@ -273,42 +272,89 @@ g3::vector<T,Allocator>::iterator g3::vector<T,Allocator>::insert(const_iterator
 
     arr_[index] = val; 
     ++size_;
+    return begin() + index; 
 }
+
 
 template<typename T, typename Allocator>
 g3::vector<T,Allocator>::iterator g3::vector<T,Allocator>::insert(const_iterator pos , size_type count ,const_reference val) {
-     size_type index = pos - arr_;
+     size_type index = pos.ptr - arr_;
+    
+    if (size_ > capacity_) {
+        reserve(size_);
+    }
 
-     for (size_type i = 0; i < count; ++i) {
-        insert(index,val);
-     }
-     ++size_;
-     return pos + cbegin();
+    for (size_type i = size_ + count - 1; i > index + count - 1; --i) {
+        arr_[i] = std::move(arr_[i - count]);
+    }
+    for (size_type i = index; i < index + count; ++i) {
+        arr_[i] = val;
+    }
+    ++size_;
+
+    return begin() + index;
 }
 
 template<typename T, typename Allocator>
 g3::vector<T,Allocator>::iterator g3::vector<T,Allocator>::insert(const_iterator pos , std::initializer_list<value_type> init) {
-    for (const T& val : init) {
-        insert(pos , val);
+    size_type index = pos.ptr - arr_;
+    size_t count = init.size();
+    if (size_ + count > capacity_)
+    {  
+        reserve(size_ + count);
     }
-    ++size_;
-    return pos + cbegin();
+
+    for (size_type i = size_; i > index; --i)
+    {
+        arr_[i + count - 1] = std::move(arr_[i - 1]);
+    }
+
+    auto it = init.begin();
+
+    for (size_type i = index; i < count + index; ++i)
+    {
+        arr_[i] = *it++;
+    }
+
+    size_ += count;
+    
+    
+    
+    return begin() + index;
 }
 
 template<typename T, typename Allocator>
-template<typename InputIt>
-g3::vector<T,Allocator>::iterator g3::vector<T,Allocator>::insert(const_iterator pos , InputIt first , InputIt last) {
-    // size_type index = size_ - size_;
+template<typename InputIt> 
+ g3::vector<T, Allocator>::iterator g3::vector<T, Allocator>::insert(const_iterator pos, InputIt first, InputIt last) {
+    size_type index = pos.ptr - arr_;
 
-    // for(; first != last; ++first) {
-    //     insert(pos,first);
-    // }
-    // ++size_;
+    size_type count = 0;
+    for (InputIt it = first; it != last; ++it) {
+        ++count;
+    }
+
+    if (size_ + count > capacity_) {
+        reserve(size_ + count);
+    }
+
+    
+    for (size_type i = size_ + count - 1; i >= index + count; --i) {
+        arr_[i] = std::move(arr_[i - count]);
+    }
+
+    size_type i = index;
+    for (InputIt it = first; it != last; ++it, ++i) {
+        arr_[i] = std::move(it);
+    }
+
+    size_ += count;  
+
+    return begin() + index;
 }
 
 template<typename T , typename Allocator>
 g3::vector<T,Allocator>::iterator g3::vector<T,Allocator>::erase(const_iterator pos) {
-    size_type index = pos - cbegin();
+    size_type index = pos.ptr - arr_;
     for(size_type i = index; i < size_; ++i) {
         arr_[i] = arr_[i + 1];
     }
@@ -316,14 +362,17 @@ g3::vector<T,Allocator>::iterator g3::vector<T,Allocator>::erase(const_iterator 
    return begin() + index;
 }
 
-template<typename T , typename Allocator>
-g3::vector<T,Allocator>::iterator g3::vector<T,Allocator>::erase(const_iterator first , const_iterator last) {
-    for (; first != last; ++first) {
-        erase(first);
+template<typename T, typename Allocator>
+g3::vector<T, Allocator>::iterator g3::vector<T, Allocator>::erase(const_iterator first, const_iterator last) {
+    size_type count = 0;
+    for (auto it = first; it != last; ++it) {
+        ++count;
     }
-    --size_;
-    return const_iterator(last);
+    iterator it; 
+    size_ -= count;
+    return it; 
 }
+
 
 // end insert and erase
 
@@ -711,22 +760,18 @@ bool g3::vector<T,Allocator>::const_reverse_iterator::operator>=(const const_rev
 // constructor 
 
 template<typename T, typename Allocator>
-g3::vector<T,Allocator>::reverse_iterator::reverse_iterator(pointer ptr)
-
-{
+g3::vector<T,Allocator>::reverse_iterator::reverse_iterator(pointer ptr){
     const_reverse_iterator(this->ptr);
 }
 
 // operators 
 template<typename T, typename Allocator>
 g3::vector<T,Allocator>::reverse_iterator g3::vector<T,Allocator>::reverse_iterator::operator+(size_type n) const {
-
     return reverse_iterator(this->ptr - n);
 }
 
 template<typename T, typename Allocator>
 g3::vector<T,Allocator>::reverse_iterator g3::vector<T,Allocator>::reverse_iterator::operator-(size_type n) const {
-
     return reverse_iterator(this->ptr + n);
 }
 
@@ -740,8 +785,7 @@ template<typename T, typename Allocator>
 g3::vector<T,Allocator>::reverse_iterator g3::vector<T,Allocator>::reverse_iterator::operator++(int) {
   reverse_iterator tmp = *this; 
   --(*this);
-  return tmp; 
-    
+  return tmp;  
 }
 
 template<typename T, typename Allocator>
@@ -775,4 +819,5 @@ g3::vector<T,Allocator>::reference g3::vector<T,Allocator>::reverse_iterator::op
 // end operators 
 
 // end reverse_iterator 
+
 // end iterators uraaa
