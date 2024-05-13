@@ -659,9 +659,9 @@ g3::vector<T,Allocator>::const_reverse_iterator::const_reverse_iterator(pointer 
 
 template<typename T, typename Allocator>
 int g3::vector<T,Allocator>::const_reverse_iterator::compare(const const_reverse_iterator& other) const {
-    if (ptr < other) {
+    if (ptr < other.ptr) {
         return -1; 
-    }else if (ptr > other) {
+    }else if (ptr > other.ptr) {
         return 1; 
     }
     return 0; 
