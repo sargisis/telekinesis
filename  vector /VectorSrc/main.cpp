@@ -3,7 +3,7 @@
 
 int main() {
      g3::vector<int> a = {1,2,3,4,5,6};
-     for (auto it = a.crbegin(); it != a.crend(); ++it) {
+     for (auto it = a.cbegin(); it != a.cend(); ++it) {
         std::cout << *it << " " << std::flush;
      }
      std::cout << std::endl; 
