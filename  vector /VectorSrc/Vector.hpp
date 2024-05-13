@@ -430,9 +430,9 @@ void g3::vector<T,Allocator>::resize(size_type new_size , const_reference val) {
 // compare function 
 template<typename T, typename Allocator>
 int g3::vector<T,Allocator>::compare(const vector& other) const {
-    if (arr_ < other) {
+    if (arr_ < other.arr_) {
         return -1;
-    }else if (arr_ > other) {
+    }else if (arr_ > other.arr_) {
         return 1;
     }
     return 0; 
