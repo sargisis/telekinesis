@@ -583,10 +583,8 @@ bool g3::vector<T,Allocator>::const_iterator::operator>=(const const_iterator& o
 // constructors 
 template<typename T, typename Allocator>
 g3::vector<T,Allocator>::iterator::iterator(pointer ptr)   
-
-{
-    const_iterator(this->ptr);
-}
+    : const_iterator(ptr)
+{}
 
 // end 
 
