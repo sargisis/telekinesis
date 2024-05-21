@@ -1,74 +1,154 @@
-#ifndef __CELL_H__
-#define __CELL_H__
-
 #include "../Headers/Cell.h"
 
-Cell::operator int(){
-    return std::stoi(storage);
+std::ostream& operator<<(std::ostream& out , const std::vector<int>& ob) {
+    for (auto& i : ob) {
+        out << i << " ";
+    }
+    return out;
 }
 
-Cell::operator double(){
-    return std::stod(storage);
+std::istream& operator>>(std::istream& in , std::vector<int>& ob) {
+    ob.clear();
+    int var = 0; 
+    while (in >> var) {
+        ob.push_back(var);
+    }
+    return in;
 }
-
-Cell::operator std::string(){
-    return static_cast<Cell>(storage);
-}
-
-Cell::Cell(int v) {
-    storage = v;
-}
-
-Cell::Cell(double d){
-    storage = d; 
-}
-
-Cell::Cell(std::string s){
-    storage = s;
-}
-
-Cell::Cell(Cell&& rhv) 
-: storage(std::move(rhv.storage))
-
-{}
 
 Cell::Cell() 
-:  storage{""}
-
+ : value{""}
 {}
-
 
 Cell::Cell(const Cell& rhv) 
-: storage{rhv.storage} 
+    : value{rhv.value}
 {}
 
+Cell::Cell(Cell&& rhv) 
+    : value{std::move(rhv.value)}
+{}
 
-const Cell& Cell::operator=(const Cell& rhv){
-    if (this != &rhv){
-        storage = rhv.storage;
+Cell::Cell(int val) 
+    : value{std::to_string(val)}
+{}
+
+Cell::Cell(double val) 
+    : value{std::to_string(val)}
+{}
+
+Cell::Cell(char val) 
+    : value(std::to_string(val))
+{}
+
+Cell::Cell(bool val) 
+{  
+    std::stringstream ss;
+    ss << std::boolalpha << val;
+    value = ss.str();
+}
+
+Cell::Cell(std::string val) {
+    value = val; 
+}
+
+Cell::Cell(const std::vector<int>& val){
+    std::stringstream word;
+    for (const auto& elem : val) {
+        word << elem << ' '; 
+    }
+    value = word.str();
+}
+
+const Cell& Cell::operator=(const Cell& rhv) {
+    if  (this != &rhv) {
+        value = rhv.value;
     }
     return *this; 
 }
 
-const Cell& Cell::operator=(Cell&& rhv){
-    if (this != &rhv){
-        storage = std::move(rhv.storage);
-    
+const Cell& Cell::operator=(Cell&& rhv) {
+    if (this != &rhv) {
+        value = std::move(rhv.value);
     }
-    return *this;     
+    return *this; 
 }
 
-Cell::~Cell() {}
-
-
-std::ostream& operator<<(std::ostream& os , const Cell& rhv){
-    os << rhv.getValue();
-    return os; 
+const Cell& Cell::operator=(int rhv) {
+    value = std::to_string(rhv);
+    return *this; 
 }
 
-std::istream& operator>>(std::istream& is , Cell& rhv){
-    is >> rhv.storage;
-    return is; 
+const Cell& Cell::operator=(double rhv) {
+    value = std::to_string(rhv);
+    return *this; 
 }
 
-#endif // 
+const Cell& Cell::operator=(char rhv) {
+    value = std::to_string(rhv);
+    return *this; 
+}
+
+const Cell& Cell::operator=(bool rhv) {
+    value = (rhv == true) ? "false" : "true";
+    return *this; 
+}
+
+const Cell& Cell::operator=(std::string rhv) {
+    value = rhv;
+    return *this; 
+}
+
+const Cell& Cell::operator=(const std::vector<int>& rhv) {
+    std::stringstream word; 
+    for (const auto& elem : rhv) {
+        word << elem << " ";
+    }
+    value = word.str();
+    return *this; 
+}
+
+Cell::operator int() const {
+    return std::stoi(value);
+}
+
+Cell::operator double() const {
+    return std::stod(value);
+}
+
+Cell::operator char() const {
+    return value[0];
+}
+
+Cell::operator bool() const {
+    return !value.empty();
+}
+
+Cell::operator std::string() const {
+    return value; 
+}
+
+Cell::operator std::vector<int>() const {
+    std::vector<int> tmp; 
+    tmp.push_back(std::stoi(value));
+    return tmp; 
+}
+
+
+bool operator==(const Cell& lhv , const Cell& rhv) {
+
+    return (static_cast<std::string>(lhv) == static_cast<std::string>(rhv));
+}
+
+bool operator!=(const Cell& lhv , const Cell& rhv) {
+    return (static_cast<std::string>(lhv) != static_cast<std::string>(rhv));
+}
+
+std::ostream& operator<<(std::ostream& out , const Cell& ob) {
+    out << static_cast<std::string>(ob);
+    return out; 
+}
+
+std::istream& operator>>(std::istream& in , Cell& ob) {
+    in >> ob;
+    return in;
+}

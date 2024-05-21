@@ -1,46 +1,83 @@
-#ifndef __SPREAD_SHEET_H__
-#define __SPREAD_SHEET_H__
+#ifndef __SPREADSHEET__H__
+#define __SPREADSHEET__H__
+
+#include <iostream>
+#include <vector>
+#include <string>
+#include <initializer_list>
+#include <iomanip>
 
 #include "Cell.h"
 
-class SpreadSheet {
+class SpreadSheet
+{
 private:
-    Cell** ob; 
+    Cell** board;
+    size_t rowcnt;
+    size_t colcnt;
 private:
-   
+    class Column;
 public:
- SpreadSheet();
- ~SpreadSheet() noexcept;
- SpreadSheet(int row);
- SpreadSheet(int row , int col);
- SpreadSheet(const SpreadSheet& rhv);
- SpreadSheet(SpreadSheet&& rhv);
- const SpreadSheet& operator=(const SpreadSheet& rhv);
- const SpreadSheet& operator=(SpreadSheet&& rhv);
-//   SpreadSheet& operator[](POINT ob1);
-public:
-    void add_row(int row , int col , std::string str);
-    void add_colum(int row , int col  , std::string str);
-    void resize_row(int row);
-    void resize_colum(int col);
-    void resize(int row , int col);
-    void delete_row(int row);
-    void delete_colum(int col);
-    void print();
-public:
-    void copy_from(int row , int col , const SpreadSheet& rhv);
-   // SpreadSheet slice(size_t n , size_t m);
-   int get_row() const {
-        return row_width;
-   }
-   int get_col() const {
-        return col_width;
-   }
-   
-private:
- int row_width; 
- int col_width; 
 
+    SpreadSheet();
+    SpreadSheet(const SpreadSheet& rhv);
+    SpreadSheet(SpreadSheet&& rhv);
+    SpreadSheet(size_t size);
+    SpreadSheet(size_t row, size_t col);
+    ~SpreadSheet();
+
+    const SpreadSheet& operator=(const SpreadSheet& rhv);
+    const SpreadSheet& operator=(SpreadSheet&& rhv);
+
+    Column operator[](size_t pos);
+    const Column operator[](size_t pos) const;
+
+    void clear() noexcept;
+
+    size_t row() const;
+    size_t col() const;
+    Cell** board_() const;
+    void mirrorH();
+    void mirrorV();
+    void mirrorD();
+    void mirrorSD();
+
+    void rotate(int cnt);
+
+    void removeRow(size_t row);
+    void removeRows(std::initializer_list<size_t> rows);
+    void removeCol(size_t col);
+    void removeCols(std::initializer_list<size_t> cols);
+
+    void resizeRow(size_t r);
+    void resizeCol(size_t c);
+    void resize(size_t r, size_t c);
+
+
+    SpreadSheet slice(std::initializer_list<size_t> rows, std::initializer_list<size_t> cols);        
 };
 
-#endif // 
+
+class SpreadSheet::Column {
+    private:
+        Cell* col;
+    public:
+        explicit Column(Cell* col);
+    public:
+        Column() = delete;
+
+        const Column& operator=(const Column&) = delete;
+        const Column& operator=(Column&&) = delete;
+    public:
+        Cell& operator[](size_t pos);
+        const Cell& operator[](size_t pos) const;
+};
+
+bool operator==(const SpreadSheet& lhv, const SpreadSheet& rhv);
+bool operator!=(const SpreadSheet& lhv, const SpreadSheet& rhv);
+
+// std::ostream& operator<<(std::ostream& out, const SpreadSheet& ob); // beauty output using iomanip library
+
+
+
+#endif //__SPREADSHEET__H__

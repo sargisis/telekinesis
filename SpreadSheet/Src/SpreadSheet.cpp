@@ -1,243 +1,317 @@
-#include "../Headers/Cell.h"
 #include "../Headers/SpreadSheet.h"
 
-SpreadSheet::SpreadSheet()
-    : ob{nullptr}
-    , row_width{0}
-    , col_width{0}
+SpreadSheet::SpreadSheet() 
+    : board{nullptr}
+    , rowcnt{0}
+    , colcnt{0}
 {}
 
-SpreadSheet::~SpreadSheet() noexcept 
-{
-    for(size_t i = 0; i < row_width; ++i){
-        delete[] ob[i];
-        ob[i] = nullptr;
-    }
-    delete[] ob; 
-    ob = nullptr; 
-}
-
-SpreadSheet::SpreadSheet(int row)
-    : row_width{row}
-    , col_width{0}
-{
-    ob = new Cell*[row];
-    for (size_t i = 0; i < row; ++i){
-        ob[i] = new Cell[row_width];
-    }
-}
-
-SpreadSheet::SpreadSheet(int row , int col)
-    : row_width{row}
-    , col_width{col}
-{
-        ob = new Cell*[row];
-        for (size_t i = 0; i < row; ++i){
-            ob[i] = new Cell[col_width];
-        }
-}
-
-
-
 SpreadSheet::SpreadSheet(const SpreadSheet& rhv) 
-    : row_width{rhv.row_width}
-    , col_width{rhv.col_width}
+    : board{new Cell*[rhv.rowcnt]}
+    , rowcnt{rhv.rowcnt}
+    , colcnt{rhv.colcnt}
 {
-    ob = new Cell*[row_width];
-    for (size_t i = 0; i < row_width; ++i){
-        ob[i] = new Cell[col_width];
+    for (size_t i = 0; i < rhv.rowcnt; ++i) {
+        board[i] = rhv.board[i];
     }
-    for (size_t i = 0; i < row_width; ++i){
-        for (size_t j = 0; j < col_width; ++j){
-            ob[i][j] = rhv.ob[i][j];
+}
+
+SpreadSheet::SpreadSheet(SpreadSheet&& rhv) 
+    : board{std::move(rhv.board)}
+    , rowcnt{std::move(rhv.rowcnt)}
+    , colcnt{std::move(rhv.colcnt)}
+{
+    board = nullptr;
+    rowcnt = 0; 
+    colcnt = 0; 
+}
+
+SpreadSheet::SpreadSheet(size_t size )
+    : board{new Cell*[size]}
+    , rowcnt{size}
+    , colcnt{size}
+{
+  for (size_t i = 0; i < size; ++i) {
+    board[i] = new Cell[size];
+  }
+}
+
+SpreadSheet::SpreadSheet(size_t row , size_t col)
+    : board{new Cell*[row]}
+    , rowcnt{row}
+    , colcnt{col}
+{
+    for (size_t i = 0; i < row; ++i) {
+        board[i] = new Cell[col];
+    }
+}
+
+SpreadSheet::~SpreadSheet() 
+{}
+
+
+const SpreadSheet& SpreadSheet::operator=(const SpreadSheet& rhv) {
+    if (this != &rhv) {
+        clear();
+
+        board = new Cell*[rhv.rowcnt];
+        for (size_t i = 0; i < rhv.rowcnt; ++i) {
+            board[i] = new Cell[rhv.colcnt];
+        }
+
+        for (size_t i = 0; i < rhv.rowcnt; ++i) {
+            for (size_t j = 0; j < rhv.colcnt; ++j) {
+                board[i][j] = rhv.board[i][j];
+            }
+        }
+        rowcnt = rhv.rowcnt; 
+        colcnt = rhv.colcnt; 
+    }
+    return *this; 
+}
+
+const SpreadSheet& SpreadSheet::operator=(SpreadSheet&& rhv) {
+    if (this != &rhv) {
+        board = std::move(rhv.board);
+        rowcnt = std::move(rhv.rowcnt);
+        colcnt = std::move(rhv.colcnt);
+
+        board = nullptr;
+        rowcnt = 0; 
+        colcnt = 0; 
+    }
+    return *this;
+}
+
+SpreadSheet::Column SpreadSheet::operator[](size_t pos) {
+    return Column(board[pos]);
+}
+
+const SpreadSheet::Column SpreadSheet::operator[](size_t pos) const {
+    return Column(board[pos]);
+}
+
+void SpreadSheet::clear() noexcept {
+    
+    for (size_t i = 0; i < rowcnt; ++i) {
+        delete[] board[i];
+    }
+    delete[] board;
+    board = nullptr;
+}
+
+size_t SpreadSheet::row() const {
+    return rowcnt; 
+}
+
+size_t SpreadSheet::col() const {
+    return colcnt; 
+}
+
+void SpreadSheet::mirrorH() {
+    for(int i = 0; i < rowcnt / 2; ++i)
+    {
+        for(int j = 0; j < colcnt; ++j)
+        {
+            Cell tmp = board[i][j];
+            board[i][j] = board[rowcnt - 1 - i][j];
+            board[rowcnt - 1 - i][j]  = tmp;
         }
     }
 }
 
-SpreadSheet::SpreadSheet(SpreadSheet&& rhv)
-    : ob{std::move(rhv.ob)}
-    , row_width{std::move(rhv.row_width)}
-    , col_width{std::move(rhv.col_width)}
-{
-    ob = nullptr; 
-    row_width = 0; 
-    col_width = 0; 
+void SpreadSheet::mirrorV() {
+    rotate(2);
+    mirrorH();
 }
 
+void SpreadSheet::mirrorD() {
+    rotate(3);
+    mirrorH();
+}
 
-const SpreadSheet& SpreadSheet::operator=(const SpreadSheet& rhv){
-    if (this != &rhv){
-        for(size_t i = 0; i < row_width; ++i){
-            delete[] ob[i];
-            ob[i] = nullptr;
-        }
-        row_width = rhv.row_width;
-        col_width = rhv.col_width;
+void SpreadSheet::mirrorSD() {
+    rotate(1);
+    mirrorH();
+}
 
-        ob = new Cell*[row_width];
-        for (size_t i = 0; i < row_width; ++i){
-            ob[i] = new Cell[col_width];
+void SpreadSheet::rotate(int cnt) {
+    int count = (cnt >= 0) ? (cnt % 4) : (4 - (-cnt % 4)) % 4;
+
+    while (cnt--) {
+        Cell** tmp = new Cell*[colcnt];
+        for (int i = 0; i < colcnt; ++i) {
+            tmp[i] = new Cell[rowcnt];
+            for (int j = 0; j < rowcnt; ++j) {
+                tmp[i][j] = board[rowcnt - 1 - j][i];
+            }
         }
-        for (size_t i = 0; i < row_width; ++i){
-            for (size_t j = 0; j < col_width; ++j){
-                ob[i][j] = rhv.ob[i][j];
+
+        size_t newRowCnt = colcnt;
+        size_t newColCnt = rowcnt;
+
+        clear();
+
+        board = tmp;
+        rowcnt = newRowCnt;
+        colcnt = newColCnt;
+    }
+}
+
+void SpreadSheet::removeRow(size_t row) {
+    if (0 >= row && row < rowcnt) {
+        for (size_t i = 0; i < rowcnt - 1; ++i) {
+            board[i] = board[i + 1];
+        }
+    }
+    delete[] board[rowcnt - 1];
+    board[rowcnt - 1] = nullptr;
+    --rowcnt;
+}
+
+void SpreadSheet::removeRows(std::initializer_list<size_t> rows) {
+    std::vector<size_t> sortRow(rows);
+    std::sort(sortRow.rbegin() , sortRow.rend());
+
+    for (size_t row : sortRow) {
+        if (row >= rowcnt) {
+            std::runtime_error("");
+        }
+
+        for (size_t i = 0; i < rowcnt - 1; ++i) {
+            for (size_t j = 0; j < colcnt; ++j) {
+                board[i][j] = board[i + 1][j];
             }
         }
     }
-    return *this; 
+    delete[] board[rowcnt - 1];
+    board[rowcnt] = nullptr;
+    --rowcnt;
 }
 
-const SpreadSheet& SpreadSheet::operator=(SpreadSheet&& rhv){
-    if (this != &rhv)
-    {
-        for (size_t i = 0; i < col_width; ++i){
-            delete[] ob[i];
-            ob[i] = nullptr;
-        }
-        row_width = std::move(rhv.row_width);
-        col_width = std::move(rhv.col_width);
-        ob = std::move(rhv.ob);
-
-        ob = nullptr; 
-        row_width = 0; 
-        col_width = 0; 
-    }
-    return *this; 
-}
-
-void SpreadSheet::print() {
-    for (size_t i = 0; i < row_width; ++i){
-        for (size_t j = 0; j < col_width; ++j){
-            std::cout << ob[i][j].getValue() << '\t';
-        }
-        std::cout << '\n';
-    }
-}
-
-void SpreadSheet::add_row(int row , int col , std::string str){
-    row_width = row;
-    col_width = col;
-    ob = new Cell*[row_width];
-    for (size_t i = 0; i < row_width; ++i){
-        ob[i] = new Cell[col_width];
-    }
-    for (size_t i = 0; i < row_width; ++i){
-        for (size_t j = 0; j < col_width; ++j){
-            ob[i][j] = str;
+void SpreadSheet::removeCol(size_t col) {
+    if (0 >= col && col < colcnt) {
+        for (size_t i = 0; i < colcnt; ++i) {
+            board[i] = board[i - 1];
         }
     }
-    delete[] ob[row];
-    ob[row] = nullptr; 
+    delete[] board[colcnt - 1];
+    board[colcnt - 1] = nullptr;
 }
 
-void SpreadSheet::add_colum(int row , int col , std::string str){
-    row_width = row; 
-    col_width = col; 
-    ob = new Cell*[col_width];
-    for (size_t i = 0; i < col_width; ++i){
-        ob[i] = new Cell[row_width];
-    }
-    for (size_t i = 0; i < col_width; ++i){
-        for (size_t j = 0; j < row_width; ++j){
-            ob[i][j] = str; 
+void SpreadSheet::removeCols(std::initializer_list<size_t> col) {
+    std::vector<size_t> sortCol(col);
+    std::sort(sortCol.rbegin(), sortCol.rend());
+    for (size_t col : sortCol) {
+        if (col >= colcnt) {
+            std::runtime_error("");
+        }
+        for (size_t i = 0; i < rowcnt; ++i) {
+            for (size_t j = 0; j < colcnt; ++j) {
+                board[i][j] = board[i][j + 1];
+            }
         }
     }
-    delete[] ob[col];
-    ob[col] = nullptr;
+    delete[] board[colcnt - 1];
+    board[colcnt - 1] = nullptr;
+    --colcnt;
 }
 
-
-void SpreadSheet::resize_row(int row) {
-    int minRow = std::min(row , row_width);
-    Cell** new_size = new Cell*[row];
-    for (size_t i = 0; i < minRow; ++i){
-        new_size[i] = ob[i];
+void SpreadSheet::resizeRow(size_t r) {
+   
+    if (r == rowcnt) {
+        return; 
+    }
+    Cell** new_board = new Cell*[r];
+    for (size_t i = 0; i < r; ++i) {
+        new_board[i] = new Cell[colcnt];
     }
 
-    for (size_t i = minRow; i < row; ++i){
-         new_size[i] = new Cell();
+     int minRow = std::min(r , rowcnt);
+    for (size_t i = minRow; i < r; ++i) {
+        new_board[i] = new Cell();
     }
-    ob = new_size; 
-    row_width = row;
+    board = new_board;
+    rowcnt = r;
 }
 
-void SpreadSheet::resize_colum(int col){
-    int minCol = std::min(col , col_width);
-    Cell** new_size = new Cell*[col];
-    for (size_t i = 0; i < minCol; ++i){
-        new_size[i] = ob[i];
+void SpreadSheet::resizeCol(size_t c) {
+    if (c == colcnt) {
+        return ;
     }
-    for (size_t i = minCol; i < col; ++i){
-        new_size[i] = new Cell();
+    Cell** new_board = new Cell*[c];
+    for (size_t i = 0; i < c; ++i) {
+        new_board[i] = new Cell[c];
     }
-    ob = new_size; 
-    col_width = col; 
+    int minCol = std::min(c , colcnt);
+    for (size_t i = minCol; i < c; ++i) {
+        new_board[i] = new Cell();
+    }
+    board = new_board; 
+    colcnt = c;
+}
+
+void SpreadSheet::resize(size_t r, size_t c) {
+    resizeRow(r);
+    resizeCol(c);
+} 
+
+SpreadSheet SpreadSheet::slice(std::initializer_list<size_t> rows , std::initializer_list<size_t> cols) {
+    int new_row = rows.size();
+    int new_col = cols.size();
+
+    SpreadSheet sliceer(new_row , new_col);
+
+    size_t new_rowcnt = 0; 
+    for (size_t row : rows) {
+        if (row >= rowcnt ){
+            std::runtime_error("");
+        }
     
+    size_t new_colcnt = 0; 
+    for (size_t col : cols) {
+        if (col >= colcnt) {
+            std::runtime_error("");
+        }
+        sliceer.board[new_rowcnt][new_colcnt] = board[row][col];
+        ++new_col;
+    }
+    ++new_row;
+}
+    return sliceer;
 }
 
-void SpreadSheet::resize(int row , int col ){
-    row_width = row; 
-    col_width = col; 
-    int minRow = std::min(row , row_width);
-    int minCol = std::min(col , col_width);
-    Cell** new_size = new Cell*[row];
-    for (size_t i = 0; i < minRow; ++i){
-        new_size[i] = ob[i];
-    }
-    for (size_t i = minRow; i < row_width; ++i){
-        new_size[i] = new Cell();
-    }
-    for (size_t i = 0; i < minCol; ++i){
-        new_size[i] = ob[i];
-    }
-    for (size_t i = minCol; i < col_width; ++i){
-        new_size[i] = new Cell();
-    }
-    ob = new_size; 
-    row_width = row; 
-    ob = new_size; 
-    col_width = col; 
+Cell** SpreadSheet::board_() const {
+     return board;
 }
 
-void SpreadSheet::delete_row(int row){
-    if (0 >= row && row < row_width){
-        for (size_t i = 0 ; i < row_width - 1; ++i){
-            ob[i] = ob[i + 1];
+SpreadSheet::Column::Column(Cell* ob)
+    : col(ob)
+{}
+
+Cell& SpreadSheet::Column::operator[](size_t pos) {
+    return col[pos];
+}
+
+const Cell& SpreadSheet::Column::operator[](size_t pos) const {
+    return col[pos];
+}
+
+bool operator==(const SpreadSheet& lhv, const SpreadSheet& rhv) {
+    if (lhv.row() != rhv.row() || lhv.col() != rhv.col()) {
+        return false;
+    }
+
+    for (size_t i = 0; i < lhv.row(); ++i ){
+        for (size_t j = 0; j < rhv.col(); ++j) {
+            if (lhv[i][j] != rhv[i][j]){
+                return false; 
+            }
         }
     }
-    delete[] ob[row];
-    ob[row] = nullptr;
-    --row_width; 
+    return true; 
 }
 
-void SpreadSheet::delete_colum(int col ){
-    if (0 >= col && col < col_width){
-        for (size_t i = 0; i < col_width; ++i){
-            ob[i] = ob[i - 1];
-        }
-    }
-    delete[] ob[col];
-    ob[col] = nullptr;
-    --col_width;
+bool operator!=(const SpreadSheet& lhv , const SpreadSheet& rhv) {
+    return !(lhv == rhv);
 }
-
-void SpreadSheet::copy_from(int row , int col , const SpreadSheet& rhv){
-    if (0 >= row && row < row_width && row_width < rhv.row_width || 0 >= col && row < col_width && col_width < rhv.col_width){
-        delete[] ob;
-        ob = nullptr; 
-    }
-    row_width = rhv.row_width; 
-    col_width = rhv.col_width;
-    ob = new Cell*[row];
-    for (size_t i = 0; i < row; ++i){
-        ob[i] = new Cell[col];
-    }
-    for (size_t i = 0; i < row; ++i){
-        for (size_t j = 0; j < col; ++j){
-            ob[i][j] = rhv.ob[i][j];
-        }
-    }
-}
-
-
-
